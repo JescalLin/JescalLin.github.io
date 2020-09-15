@@ -47,7 +47,7 @@ init();
 function play() {
   no++;
   runTimes++;
-  if (no >= 11) {
+  if (no >= 15) {
     no = 1;
   }
   //console.log("no:"+no+"      runTimes:" + runTimes+"     stopPlay:" + stopPlay);
