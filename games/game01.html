@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<title>說走就走</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="./css/w3.css">
+<script>
+  window.onload= function(){
+    document.getElementById('id01').style.display='block'
+    var map = document.getElementById('map');
+    var btn_all = document.getElementById('btn_all');
+    var btn_north = document.getElementById('btn_north');
+    var btn_center = document.getElementById('btn_center');
+    var btn_south = document.getElementById('btn_south');
+    var btn_east = document.getElementById('btn_east');
+    var btn_outside = document.getElementById('btn_outside');
+    north   = ["./images/map-n01.png","./images/map-n02.png","./images/map-n03.png","./images/map-n04.png","./images/map-n05.png","./images/map-n06.png","./images/map-n07.png"]
+    south   = ["./images/map-s01.png","./images/map-s02.png","./images/map-s03.png","./images/map-s04.png","./images/map-s05.png"]
+    east    = ["./images/map-e01.png","./images/map-e02.png"]
+    center  = ["./images/map-m01.png","./images/map-m02.png","./images/map-m03.png","./images/map-m04.png","./images/map-m05.png"]
+    outside = ["./images/map-o01.png","./images/map-o02.png","./images/map-o03.png"]
+    all     = ["./images/map-n01.png","./images/map-n02.png","./images/map-n03.png","./images/map-n04.png","./images/map-n05.png","./images/map-n06.png","./images/map-n07.png","./images/map-s01.png","./images/map-s02.png","./images/map-s03.png","./images/map-s04.png","./images/map-s05.png","./images/map-e01.png","./images/map-e02.png","./images/map-m01.png","./images/map-m02.png","./images/map-m03.png","./images/map-m04.png","./images/map-m05.png","./images/map-o01.png","./images/map-o02.png","./images/map-o03.png"]
+    var i
+    var tii_all=0;
+    var tii_north=0;
+    var tii_center=0;
+    var tii_south=0;
+    var tii_east=0;
+    var tii_outside=0;
+    var myVar_all;
+    var myVar_north;
+    var myVar_center;
+    var myVar_south;
+    var myVar_east;
+    var myVar_outside;
+    function myfunction_all() {
+        var x1 = Math.floor((Math.random() * 22));
+        map.src = all[x1];
+        tii_all=tii_all+25;
+        if(tii_all>2500)
+        {
+            clearTimeout(myVar_all); 
+            btn_all.disabled=false
+            btn_north.disabled =false
+            btn_center.disabled =false
+            btn_south.disabled =false
+            btn_east.disabled = false
+            btn_outside.disabled=false
+        }
+    }
+    function myfunction_north() {
+        var x1 = Math.floor((Math.random() * 7));
+        map.src = north[x1];
+        tii_north=tii_north+25;
+        if(tii_north>2500)
+        {
+            clearTimeout(myVar_north); 
+            btn_all.disabled=false
+            btn_north.disabled =false
+            btn_center.disabled =false
+            btn_south.disabled =false
+            btn_east.disabled = false
+            btn_outside.disabled=false
+        }
+    }
+    function myfunction_east() {
+        var x1 = Math.floor((Math.random() * 2));
+        map.src = east[x1];
+        tii_east=tii_east+25;
+        if(tii_east>2500)
+        {
+            clearTimeout(myVar_east); 
+            btn_all.disabled=false
+            btn_north.disabled =false
+            btn_center.disabled =false
+            btn_south.disabled =false
+            btn_east.disabled = false
+            btn_outside.disabled=false
+        }
+    }
+    function myfunction_center() {
+        var x1 = Math.floor((Math.random() * 5));
+        map.src = center[x1];
+        tii_center=tii_center+25;
+        if(tii_center>2500)
+        {
+            clearTimeout(myVar_center); 
+            btn_all.disabled=false
+            btn_north.disabled =false
+            btn_center.disabled =false
+            btn_south.disabled =false
+            btn_east.disabled = false
+            btn_outside.disabled=false
+        }
+    }
+    function myfunction_south() {
+        var x1 = Math.floor((Math.random() * 5));
+        map.src = south[x1];
+        tii_south=tii_south+25;
+        if(tii_south>2500)
+        {
+            clearTimeout(myVar_south); 
+            btn_all.disabled=false
+            btn_north.disabled =false
+            btn_center.disabled =false
+            btn_south.disabled =false
+            btn_east.disabled = false
+            btn_outside.disabled=false
+        }
+    }
+    function myfunction_outside() {
+        var x1 = Math.floor((Math.random() * 3));
+        map.src = outside[x1];
+        tii_outside=tii_outside+25;
+        if(tii_outside>2500)
+        {
+            clearTimeout(myVar_outside); 
+            btn_all.disabled=false
+            btn_north.disabled =false
+            btn_center.disabled =false
+            btn_south.disabled =false
+            btn_east.disabled = false
+            btn_outside.disabled=false
+        }
+    }
+
+    btn_all.onclick = function() {
+      tii_all=0
+      myVar_all = setInterval(myfunction_all, 10);
+      btn_all.disabled=true
+      btn_north.disabled =true
+      btn_center.disabled =true
+      btn_south.disabled =true
+      btn_east.disabled = true
+      btn_outside.disabled=true
+    }
+
+    btn_north.onclick = function() {
+      tii_north=0
+      myVar_north = setInterval(myfunction_north, 10);
+      btn_all.disabled=true
+      btn_north.disabled =true
+      btn_center.disabled =true
+      btn_south.disabled =true
+      btn_east.disabled = true
+      btn_outside.disabled=true
+    }
+    btn_south.onclick = function() {
+      tii_south=0
+      myVar_south = setInterval(myfunction_south, 10);
+      btn_all.disabled=true
+      btn_north.disabled =true
+      btn_center.disabled =true
+      btn_south.disabled =true
+      btn_east.disabled = true
+      btn_outside.disabled=true
+    }
+    btn_east.onclick = function() {
+      tii_east=0
+      myVar_east = setInterval(myfunction_east, 10);
+      btn_all.disabled=true
+      btn_north.disabled =true
+      btn_center.disabled =true
+      btn_south.disabled =true
+      btn_east.disabled = true
+      btn_outside.disabled=true
+    }
+    btn_center.onclick = function() {
+      tii_center=0
+      myVar_center = setInterval(myfunction_center, 10);
+      btn_all.disabled=true
+      btn_north.disabled =true
+      btn_center.disabled =true
+      btn_south.disabled =true
+      btn_east.disabled = true
+      btn_outside.disabled=true
+    }
+    btn_outside.onclick = function() {
+      tii_outside=0
+      myVar_outside = setInterval(myfunction_outside, 10);
+      btn_all.disabled=true
+      btn_north.disabled =true
+      btn_center.disabled =true
+      btn_south.disabled =true
+      btn_east.disabled = true
+      btn_outside.disabled=true
+    }
+  
+    
+    
+  }
+</script>
+<body>
+
+
+<div class="w3-container">
+  <div id="id01" class="w3-modal">
+    <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="width:100% max-width:300px">
+      <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+        <p>點選按鈕隨機旅遊地點</p>
+        <button id="btn_all"   class="w3-button w3-black w3-round">ALL</button>
+        <button id="btn_north" class="w3-button w3-blue w3-round">北部</button>
+        <button id="btn_center" class="w3-button w3-green w3-round">中部</button>
+        <button id="btn_south" class="w3-button w3-orange w3-round">南部</button>
+        <button id="btn_east" class="w3-button w3-red w3-round">東部</button>
+        <button id="btn_outside" class="w3-button w3-purple w3-round">離島</button>
+      </div>
+      <div class="w3-center"><br>
+        <img id="map" src="images/map.png" style="width:100%" class=" w3-margin-top">
+        <img style="display:none" src="./images/map-e01.png">
+        <img style="display:none" src="./images/map-e02.png">
+        <img style="display:none" src="./images/map-m01.png">
+        <img style="display:none" src="./images/map-m02.png">
+        <img style="display:none" src="./images/map-m03.png">
+        <img style="display:none" src="./images/map-m04.png">
+        <img style="display:none" src="./images/map-m05.png">
+        <img style="display:none" src="./images/map-n01.png">
+        <img style="display:none" src="./images/map-n02.png">
+        <img style="display:none" src="./images/map-n03.png">
+        <img style="display:none" src="./images/map-n04.png">
+        <img style="display:none" src="./images/map-n05.png">
+        <img style="display:none" src="./images/map-n06.png">
+        <img style="display:none" src="./images/map-n07.png">
+        <img style="display:none" src="./images/map-s01.png">
+        <img style="display:none" src="./images/map-s02.png">
+        <img style="display:none" src="./images/map-s03.png">
+        <img style="display:none" src="./images/map-s04.png">
+        <img style="display:none" src="./images/map-s05.png">
+        <img style="display:none" src="./images/map-o01.png">
+        <img style="display:none" src="./images/map-o02.png">
+        <img style="display:none" src="./images/map-o03.png">
+      </div>
+
+
+    </div>
+  </div>
+</div>
+            
+</body>
+</html>
