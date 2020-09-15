@@ -6,7 +6,7 @@ body {
   display: block;
 }
 .slotWrap {
-  width: 800px;
+  width: 500px;
   margin: 0 auto;
   background: #bf3600;
   border-radius: 42px;
@@ -16,7 +16,7 @@ body {
   position: relative;
 }
 .slotWrap div {
-  width: 192px;
+  width: 500px;
   height: 92px;
   margin: 0 1px 8px;
   background: #ffe74c;
@@ -44,186 +44,6 @@ body {
   box-shadow: none;
 }
 
-button {
-  font-size: 24px;
-  font-weight: bold;
-  letter-spacing: 2px;
-  width: 50%;
-  height: 80%;
-  border: none;
-  outline: none;
-  padding: 10px 20px;
-  border-radius: 20px;
-  background: #f14225;
-  box-shadow: 0 2px 0 2px #951500;
-  color: #fff;
-  cursor: pointer;
-}
-button:active {
-  margin-top: 8px;
-  box-shadow: 0 -2px 0 2px #951500;
-}
-
-.light {
-  width: 12px;
-  height: 12px;
-  border-radius: 100%;
-  box-shadow: 0 2px 5px 1px rgba(0, 0, 0, 0.3);
-  position: absolute;
-  -webkit-animation:1.5s infinite;
-          animation:1.5s infinite;
-}
-.light:nth-child(even) {
-  -webkit-animation-name:lightEven;
-          animation-name:lightEven;
-}
-@-webkit-keyframes lightEven {
-    0% {
-        background: #ffe212;
-    }
-    50% {
-        background: #f45c01;
-    }
-    100%{
-        background: #ffe212;
-    }
-}
-.light:nth-child(odd) {
-  -webkit-animation-name:lightOdd;
-          animation-name:lightOdd;
-}
-@-webkit-keyframes lightOdd {
-    0% {
-        background: #f45c01;
-    }
-    50% {
-        background: #ffe212;
-    }
-    100%{
-        background: #f45c01;
-    }
-}
-.light1 {
-  top: -1%;
-  left: -1%;
-}
-.light2 {
-  top: -5%;
-  left: 10%;
-}
-.light3 {
-  top: -5%;
-  left: 20%;
-}
-.light4 {
-  top: -5%;
-  left: 30%;
-}
-.light5 {
-  top: -5%;
-  left: 40%;
-}
-.light6 {
-  top: -5%;
-  left: 50%;
-}
-.light7 {
-  top: -5%;
-  left: 60%;
-}
-
-.light8 {
-  top: -5%;
-  left: 70%;
-}
-.light9 {
-  top: -5%;
-  left: 80%;
-}
-.light10 {
-  top: -5%;
-  left: 90%;
-}
-.light11 {
-  top: -1%;
-  right: -1%;
-}
-.light12 {
-  top: 20%;
-  left: 100.5%;
-}
-.light13 {
-  top: 40%;
-  left: 100.5%;
-}
-.light14 {
-  top: 60%;
-  left: 100.5%;
-}
-.light15 {
-  top: 80%;
-  left: 100.5%;
-}
-.light16 {
-  bottom: -1%;
-  right: -1%;
-}
-.light17 {
-  bottom: -5%;
-  left: 90%;
-}
-.light18 {
-  bottom: -5%;
-  left: 80%;
-}
-.light19 {
-  bottom: -5%;
-  left: 70%;
-}
-.light20 {
-  bottom: -5%;
-  left: 60%;
-}
-.light21 {
-  bottom: -5%;
-  left: 50%;
-}
-.light22 {
-  bottom: -5%;
-  left: 40%;
-}
-.light23 {
-  bottom: -5%;
-  left: 30%;
-}
-.light24 {
-  bottom: -5%;
-  left: 20%;
-}
-.light25 {
-  bottom: -5%;
-  left: 10%;
-}
-.light26 {
-  bottom: -1%;
-  left: -1%;
-}
-.light27 {
-  top: 80%;
-  right: 100.5%;
-}
-.light28 {
-  top: 60%;
-  right: 100.5%;
-}
-.light29 {
-  top: 40%;
-  right: 100.5%;
-}
-.light30 {
-  top: 20%;
-  right: 100.5%;
-}
 
 /* 彈窗 */
 .popup-wrap {

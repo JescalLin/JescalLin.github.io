@@ -81,13 +81,14 @@ function init() {
   sec = 50;
   no = no - 1;
   $("button").attr("disabled", false);
-}
-$("button").click(function() {
   if (runTimes > 0) return;
   // console.log("run");
   stopPlay = Math.floor(Math.random() * (20 - 0) + 20);
   $(this).attr("disabled", true);
   play();
+}
+$("button").click(function() {
+
 });
 
 // 彈窗效果
