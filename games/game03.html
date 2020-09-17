@@ -1,23 +1,90 @@
-﻿<!DOCTYPE html>
-<html>
-<title>賓果連線</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" href="./css/w3.css">
+﻿<html>
 
-<script type="text/javascript">
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Cambay' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
+<meta charset="utf-8" />
 
+<title>Bingo</title>
+
+<style>
+body {
+  display: flex;
+  height: 100vh;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+h1, p {
+  font-family: 'Roboto', sans-serif; font-size: 20pt;
+  font-weight: 600;
+  margin: 0 auto;
+  text-align: center;
+  padding: 30px;
+  color: white;
+}
+
+p a {
+  text-decoration: none;
+  color: #f1c40f;
+}
+
+#squarefree {
+  font-family: Helvetica;
+  margin: 0 auto;
+  background: #5dc4de;
+  text-align: center;
+  font-weight: 600;
+  font-size: 15pt;
+}
+
+#bingotable {
+  margin: 0 auto;
+  text-align: center;
+  width: 400px;
+  height: 400px;
+  border-collapse: collapse;
+  background: white;
+}
+
+th, td {
+  font-family: Helvetica;
+  margin: 0 auto;
+  text-align: center;
+  border: 3px solid black;
+  width: 20%;
+}
+
+.orange {
+  background: #FFA500;
+}
+.red {
+  background: #ff8080;
+}
+.blue {
+  background: #80bfff;
+}
+</style>
+
+
+<script>
   function getElements(id) {
     var num = document.getElementById("num");
     var num_value = num.value;
-    var x = document.getElementsByTagName("input");
-    if (x[id].value == "00") {
+    var x = [];
+    var i;
+    for (i = 1; i < 26; i++) {
+      x[i] = document.getElementById("square"+i.toString());
+    }
+    if (x[id].innerHTML == " &nbsp;") {
       if (num_value < 10) {
-        x[id].value = "0" + num_value;
+        x[id].innerHTML = "0" + num_value;
       }
       else {
-        x[id].value = num_value;
+        x[id].innerHTML = num_value;
       }
-      x[id].className = "w3-button w3-circle w3-blue w3-border";
+      x[id].className = "blue";
       num_value++;
       num.value = num_value
     }
@@ -25,7 +92,7 @@
 
     }
     if (num_value == 27) {
-      x[id].className = "w3-button w3-circle w3-border w3-red";
+      x[id].className = "red";
     }
     if (num_value == 26) {
       num_value++;
@@ -35,51 +102,64 @@
 
   }
 
-
 </script>
 
-<body class="w3-center">
-  <h3 class="w3-bar-item">賓果連線5x5</h3>
-  <input style="display:none" id="num" value="1">
-  <hr>
-  <div style="display:inline;">
-    <input class="w3-button w3-circle w3-white w3-border w3-card-4" onclick="getElements(1)" type="button" value="00">
-    <input class="w3-button w3-circle w3-white w3-border w3-card-4" onclick="getElements(2)" type="button" value="00">
-    <input class="w3-button w3-circle w3-white w3-border w3-card-4" onclick="getElements(3)" type="button" value="00">
-    <input class="w3-button w3-circle w3-white w3-border w3-card-4" onclick="getElements(4)" type="button" value="00">
-    <input class="w3-button w3-circle w3-white w3-border w3-card-4" onclick="getElements(5)" type="button" value="00">
-  </div>
-  <br>
-  <div style="display:inline;">
-    <input class="w3-button w3-circle w3-white w3-border w3-card-4" onclick="getElements(6)" type="button" value="00">
-    <input class="w3-button w3-circle w3-white w3-border w3-card-4" onclick="getElements(7)" type="button" value="00">
-    <input class="w3-button w3-circle w3-white w3-border w3-card-4" onclick="getElements(8)" type="button" value="00">
-    <input class="w3-button w3-circle w3-white w3-border w3-card-4" onclick="getElements(9)" type="button" value="00">
-    <input class="w3-button w3-circle w3-white w3-border w3-card-4" onclick="getElements(10)" type="button" value="00">
-  </div>
-  <br>
-  <div style="display:inline;">
-    <input class="w3-button w3-circle w3-white w3-border w3-card-4" onclick="getElements(11)" type="button" value="00">
-    <input class="w3-button w3-circle w3-white w3-border w3-card-4" onclick="getElements(12)" type="button" value="00">
-    <input class="w3-button w3-circle w3-white w3-border w3-card-4" onclick="getElements(13)" type="button" value="00">
-    <input class="w3-button w3-circle w3-white w3-border w3-card-4" onclick="getElements(14)" type="button" value="00">
-    <input class="w3-button w3-circle w3-white w3-border w3-card-4" onclick="getElements(15)" type="button" value="00">
-  </div>
-  <br>
-  <div style="display:inline;">
-    <input class="w3-button w3-circle w3-white w3-border w3-card-4" onclick="getElements(16)" type="button" value="00">
-    <input class="w3-button w3-circle w3-white w3-border w3-card-4" onclick="getElements(17)" type="button" value="00">
-    <input class="w3-button w3-circle w3-white w3-border w3-card-4" onclick="getElements(18)" type="button" value="00">
-    <input class="w3-button w3-circle w3-white w3-border w3-card-4" onclick="getElements(19)" type="button" value="00">
-    <input class="w3-button w3-circle w3-white w3-border w3-card-4" onclick="getElements(20)" type="button" value="00">
-  </div>
-  <br>
-  <div style="display:inline;">
-    <input class="w3-button w3-circle w3-white w3-border w3-card-4" onclick="getElements(21)" type="button" value="00">
-    <input class="w3-button w3-circle w3-white w3-border w3-card-4" onclick="getElements(22)" type="button" value="00">
-    <input class="w3-button w3-circle w3-white w3-border w3-card-4" onclick="getElements(23)" type="button" value="00">
-    <input class="w3-button w3-circle w3-white w3-border w3-card-4" onclick="getElements(24)" type="button" value="00">
-    <input class="w3-button w3-circle w3-white w3-border w3-card-4" onclick="getElements(25)" type="button" value="00">
-  </div>
-  <br>
+</head>
+
+<body>
+
+	<div id="container">
+    <div id="header">
+    </div>
+	<div id="content">
+    <input style="display:none" id="num" value="1">
+		<table id="bingotable">
+			<tr>
+				<th class="orange">B</th>
+				<th class="orange">I</th>
+				<th class="orange">N</th>
+				<th class="orange">G</th>
+				<th class="orange">O</th>
+			</tr>
+			<tr>
+				<td id="square1" onclick="getElements(1)"> &nbsp;</td>
+				<td id="square2" onclick="getElements(2)"> &nbsp;</td>
+				<td id="square3" onclick="getElements(3)"> &nbsp;</td>
+				<td id="square4" onclick="getElements(4)"> &nbsp;</td>
+				<td id="square5" onclick="getElements(5)"> &nbsp;</td>
+			</tr>
+			<tr>
+				<td id="square6" onclick="getElements(6)"> &nbsp;</td>
+				<td id="square7" onclick="getElements(7)"> &nbsp;</td>
+				<td id="square8" onclick="getElements(8)"> &nbsp;</td>
+				<td id="square9" onclick="getElements(9)"> &nbsp;</td>
+				<td id="square10" onclick="getElements(10)"> &nbsp;</td>
+			</tr>
+			<tr>
+				<td id="square11" onclick="getElements(11)"> &nbsp;</td>
+				<td id="square12" onclick="getElements(12)"> &nbsp;</td>
+				<td id="square13" onclick="getElements(13)"> &nbsp</td>
+				<td id="square14" onclick="getElements(14)"> &nbsp;</td>
+				<td id="square15" onclick="getElements(15)"> &nbsp;</td>
+			</tr>
+			<tr>
+				<td id="square16" onclick="getElements(16)"> &nbsp;</td>
+				<td id="square17" onclick="getElements(17)"> &nbsp;</td>
+				<td id="square18" onclick="getElements(18)"> &nbsp;</td>
+        <td id="square19" onclick="getElements(19)"> &nbsp;</td>
+        <td id="square20" onclick="getElements(20)"> &nbsp;</td>
+			</tr>
+			<tr>
+				<td id="square21" onclick="getElements(21)"> &nbsp;</td>
+				<td id="square22" onclick="getElements(22)"> &nbsp;</td>
+				<td id="square23" onclick="getElements(23)"> &nbsp;</td>
+        <td id="square24" onclick="getElements(24)"> &nbsp;</td>
+        <td id="square25" onclick="getElements(25)"> &nbsp;</td>
+			</tr>
+		</table>
+	</div>
+	
+
 </body>
+
+</html>
