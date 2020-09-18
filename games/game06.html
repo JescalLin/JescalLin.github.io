@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<title>擲茭</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="./css/w3.css">
+<script type="text/javascript">
+  window.onload = function () {
+    var btn1 = document.getElementById('btn1');
+    var demo = document.getElementById('demo');
+    var str = ['./images/1.gif', './images/2.gif', './images/3.gif'];
+
+    btn1.onclick = function () {
+      var x1 = Math.floor((Math.random() * 3));
+      btn1.src = str[x1];
+      if(x1==0)
+        demo.innerHTML = "聖茭"
+      if(x1==1)
+        demo.innerHTML = "笑茭"
+      if(x1==2)
+        demo.innerHTML = "陰茭"
+    }
+
+  }
+</script>
+
+<body>
+  <div class="w3-center">
+    <img id="btn1" src="./images/0.jpg">
+    <p id="demo"></p>
+  </div>
+</body>
