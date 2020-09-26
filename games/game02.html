@@ -1,131 +1,62 @@
 <!DOCTYPE html>
-<html>
-<title>骰子吹牛</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" href="./css/w3.css">
-<style type="text/css">
-  .sha1 {
-    animation: shake 0.5s;
-    animation-iteration-count: infinite;
-  }
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - 2048 game</title>
+  <link rel="stylesheet" href="./css/02_style.css">
 
-  @keyframes shake {
-    0% {
-      transform: translate(1px, 1px) rotate(0deg);
-    }
-
-    10% {
-      transform: translate(-1px, -2px) rotate(-1deg);
-    }
-
-    20% {
-      transform: translate(-3px, 0px) rotate(1deg);
-    }
-
-    30% {
-      transform: translate(3px, 2px) rotate(0deg);
-    }
-
-    40% {
-      transform: translate(1px, -1px) rotate(1deg);
-    }
-
-    50% {
-      transform: translate(-1px, 2px) rotate(-1deg);
-    }
-
-    60% {
-      transform: translate(-3px, 1px) rotate(0deg);
-    }
-
-    70% {
-      transform: translate(3px, 1px) rotate(-1deg);
-    }
-
-    80% {
-      transform: translate(-1px, -1px) rotate(1deg);
-    }
-
-    90% {
-      transform: translate(1px, 2px) rotate(0deg);
-    }
-
-    100% {
-      transform: translate(1px, -2px) rotate(-1deg);
-    }
-  }
-</style>
-<script type="text/javascript">
-  window.onload = function () {
-    var btn1 = document.getElementById('btn1');
-    var c1 = document.getElementById('c1');
-    var c2 = document.getElementById('c2');
-    var dice1 = document.getElementById('dice1');
-    var dice2 = document.getElementById('dice2');
-    var dice3 = document.getElementById('dice3');
-    var dice4 = document.getElementById('dice4');
-    var dice5 = document.getElementById('dice5');
-    var dice6 = document.getElementById('dice6');
-    var str = ['./images/dice1.png', './images/dice2.png', './images/dice3.png', './images/dice4.png', './images/dice5.png', './images/dice6.png'];
-    var tii = 0;
-    var myVar;
-    c1.onclick = function () {
-      var x = c1.value;
-      x++;
-      c1.value = x;
-    }
-    c2.onclick = function () {
-      var x = c2.value;
-      x++;
-      c2.value = x;
-    }
-
-    function myfunction() {
-      var x1 = Math.floor((Math.random() * 6));
-      var x2 = Math.floor((Math.random() * 6));
-      var x3 = Math.floor((Math.random() * 6));
-      var x4 = Math.floor((Math.random() * 6));
-      var x5 = Math.floor((Math.random() * 6));
-      var x6 = Math.floor((Math.random() * 6));
-      dice1.src = str[x1];
-      dice2.src = str[x2];
-      dice3.src = str[x3];
-      dice4.src = str[x4];
-      dice5.src = str[x5];
-      dice6.src = str[x6];
-      tii = tii + 25;
-      if (tii > 2500) {
-        clearTimeout(myVar);
-        btn1.classList.remove("sha1");
-
-      }
-    }
-
-
-    btn1.onclick = function () {
-      tii = 0
-      myVar = setInterval(myfunction, 10);
-      btn1.classList.add("sha1");
-    }
-
-
-  }
-</script>
-
+</head>
 <body>
-  <div class="w3-center">
-    <img id="btn1" src="./images/support.png">
-    <div class="w3-row" style="height: 25px"></div>
-    <img id="dice1" src="./images/dice1.png">
-    <img id="dice2" src="./images/dice2.png">
-    <img id="dice3" src="./images/dice3.png">
-    <div class="w3-row" style="height: 5px"></div>
-    <img id="dice4" src="./images/dice4.png">
-    <img id="dice5" src="./images/dice5.png">
-    <img id="dice6" src="./images/dice6.png">
-    <div class="w3-row" style="height: 25px"></div>
-    <input class="w3-button w3-xlarge w3-blue w3-border w3-card-4" id="c1" type="button" value="0">
-    <input class="w3-button w3-xlarge w3-red w3-border w3-card-4" id="c2" type="button" value="0">
+<!-- partial:index.partial.html -->
+<div class="container">
+  <div class="heading">
+    <h1 class="title">2048</h1>
+    <div class="score-container">0</div>
   </div>
+  <p class="game-intro">Join the numbers and get to the <strong>2048 tile!</strong></p>
+
+  <div class="game-container">
+    <div class="game-message">
+      <p></p>
+      <div class="lower">
+        <a class="retry-button">Try again</a>
+      </div>
+    </div>
+
+    <div class="grid-container">
+      <div class="grid-row">
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+      </div>
+      <div class="grid-row">
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+      </div>
+      <div class="grid-row">
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+      </div>
+      <div class="grid-row">
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+      </div>
+    </div>
+
+    <div class="tile-container">
+
+    </div>
+  </div>
+</div>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/hammer.js/1.0.6/hammer.min.js'></script><script  src="./src/02_script.js"></script>
+
 </body>
+</html>
