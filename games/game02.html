@@ -2,34 +2,19 @@
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
-  <title>CodePen - Canvas Doodle Pad</title>
-  <link rel="stylesheet" href="./css/02_style.css">
+  <title>CodePen - bouncing egg</title>
+  <link rel="stylesheet" href="./style.css">
 
 </head>
 <body>
 <!-- partial:index.partial.html -->
-<body onload="init()">
-        <canvas id="can" width="800" height="700"></canvas>
-        <div class="pallet">
-          <div id="green" onclick="color(this)"></div>
-          <div id="blue" onclick="color(this)"></div>
-          <div id="purple" onclick="color(this)"></div>
-          <div id="red" onclick="color(this)"></div>
-          <div id="yellow" onclick="color(this)"></div>
-          <div id="orange" onclick="color(this)"></div>         
-          <div id="brown" onclick="color(this)"></div>
-          <div id="black" class="active" onclick="color(this)"></div>
-          <div id="white" onclick="color(this)"></div>
-          <b>Brush Size</b>
-          <input type="range" min="3" max="50" value="5" class="slider" id="brush_width">
-        </div>
-         
-        <!-- <img id="canvasimg" style="position:absolute;top:10%;left:52%;" style="display:none;"> -->
-        <!-- <input type="button" value="save" id="btn" onclick="save()" /> -->
-        <input type="button" value="Clear" id="clr" onclick="erase()" />
-    </body>
+<div class='general-container'>
+  <div class='shadow'></div>
+  <div class='egg'>
+    <div class='spots'></div>
+  </div>
+</div>
 <!-- partial -->
-  <script  src="./src/02_script.js"></script>
-
+  
 </body>
 </html>
