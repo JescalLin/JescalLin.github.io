@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-
 function GameManager(size, InputManager, Actuator) {
   this.size         = size; // Size of the grid
   this.inputManager = new InputManager;
@@ -230,8 +229,6 @@ GameManager.prototype.positionsEqual = function (first, second) {
   return first.x === second.x && first.y === second.y;
 };
 
-
-
 function Grid(size) {
   this.size = size;
 
@@ -316,7 +313,6 @@ Grid.prototype.withinBounds = function (position) {
   return position.x >= 0 && position.x < this.size &&
          position.y >= 0 && position.y < this.size;
 };
-
 
 function HTMLActuator() {
   this.tileContainer    = document.getElementsByClassName("tile-container")[0];
@@ -437,8 +433,6 @@ HTMLActuator.prototype.clearMessage = function () {
   this.messageContainer.classList.remove("game-won", "game-over");
 };
 
-
-
 function KeyboardInputManager() {
   this.events = {};
 
@@ -502,7 +496,7 @@ KeyboardInputManager.prototype.listen = function () {
     drag_block_horizontal: true,
     drag_block_vertical: true
   });
-  
+
   handler.on("swipe", function (event) {
     event.gesture.preventDefault();
     mapped = gestures.indexOf(event.gesture.direction);
@@ -515,10 +509,6 @@ KeyboardInputManager.prototype.restart = function (event) {
   event.preventDefault();
   this.emit("restart");
 };
-
-
-
-
 
 function Tile(position, value) {
   this.x                = position.x;
