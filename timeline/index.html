@@ -1,165 +1,138 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html >
 <head>
   <meta charset="UTF-8">
-  <title>CodePen - Vertical timeline</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto+Slab|Comfortaa'><link rel="stylesheet" href="./style.css">
+  <title>Vertical Timeline</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100i,300,400,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Allura" rel="stylesheet">
+  
+  <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
 
+      <link rel="stylesheet" href="css/style.css">
+
+  
 </head>
+
 <body>
+  <header>
+    <div class="container text-center">
+      <h1>這是屬於我們的故事，一輩子很長，慢慢看吧！</h1>
+    </div>
+  </header>
 
-<!-- partial:index.partial.html -->
-<div class="stem-wrapper">
-	<div class="stem"></div>
-	<div class="stem-background"></div>
-</div>
+  <section class="timeline">
+    <div class="container">
+      <div class="timeline-item">
+        <div class="timeline-img"></div>
 
-<header class="section header">
-	<div class="section-inner">
-		
-		<div class="master-head">
-			<h1 class="page-title">Love</h1>
-			<p class="page-description">TimeLine</p>
-		</div>
-			
-	</div> <!-- section-inner -->
-</header> <!-- header -->
+        <div class="timeline-content js--fadeInLeft">
+          <h2>冰淇淋日</h2>
+       		<div class="date">20200615</div>
+          <p>我們在一起了！我們把這天訂成冰淇淋日，以後的6/15都要吃冰淇淋喔！謝謝你出現在我的人生~</p>
+        </div>
+      </div> 
+      
+      <div class="timeline-item">
+        <div class="timeline-img"></div>
+        <div class="timeline-content timeline-card js--fadeInRight">
+        	<div class="timeline-img-header"><img src='img/01.jpg' width=100% height=200>
+          	<h2 class="title">Hi! 嘉義</h2>
+        	</div>
+        	<div class="date">20200718</div>
+          <p>這是我們第一次見面！好緊張喔！我們去了森林之歌、嘉義公園、仁義潭水庫，也吃了嘉義的大同火雞肉飯，感覺一下下就結束了呢~</p>
+          <br>
+        </div>
+      </div>   
+      
+      <div class="timeline-item">
+        <div class="timeline-img"></div>
+        <div class="timeline-content timeline-card js--fadeInLeft">
+        	<div class="timeline-img-header"><img src='img/02.jpg' width=100% height=200>
+          	<h2 class="title">Hi2! 台北</h2>
+        	</div>
+        	<div class="date">20200802</div>
+          <p>YA又去找你了~這次我們逛了淡水老街，在岸邊吃著奇怪的小籠包，然後我們去吃了肉多多！這是我第一次跟你吃火鍋！後來逛了IKEA跟二二八公園~</p>
+          <br>
+        </div>
+      </div>   
+      
+      <div class="timeline-item">
 
-<div class="section main-content">
-	<div class="section-inner">
-	
-		<div class="stem-padding"></div>
-		
-		<div class="post-wrapper">
-			
-			<article class="post bitbucket-icon">
-				<div class="stem-overlay">
-					<div class="icon"></div>
-					<div class="stem-mask"></div>
-				</div>
-				
-				<div class="post-content">
-					<h2 class="post-title">20200615</h2>
-					<div class="entry-content">
-						<p>我們在一起了！我們把這天訂成冰淇淋日，以後的6/15都要吃冰淇淋喔！謝謝你出現在我的人生~</p>
-					</div>
-				</div>
-			</article>
-		
-			<article class="post m-icon" data-stem-color="green">
-				<div class="stem-overlay">
-					<div class="icon"></div>
-					<div class="stem-mask"></div>
-				</div>
-				
-				<div class="post-content">
-					<h2 class="post-title">Hi! 20200718 嘉義</h2>
-					<div class="entry-content">
-						<p>這是我們第一次見面！好緊張喔！我們去了森林之歌、嘉義公園、仁義潭水庫，也吃了嘉義的大同火雞肉飯，感覺一下下就結束了呢~</p>
-					</div>
-				</div>
-			</article>
-		
-			<article class="post music-icon" data-stem-color="yellow">
-				<div class="stem-overlay">
-					<div class="icon"></div>
-					<div class="stem-mask"></div>
-				</div>
-				
-				<div class="post-content">
-					<h2 class="post-title">Hi2! 20200802 台北</h2>
-					<div class="entry-content">
-						<p>YA又去找你了~這次我們逛了淡水老街，在岸邊吃著奇怪的小籠包，然後我們去吃了肉多多！這是我第一次跟你吃火鍋！後來逛了IKEA跟二二八公園~</p>
-					</div>
-				</div>
-			</article>
-		
-			<article class="post twitter-icon" data-stem-color="white">
-				<div class="stem-overlay">
-					<div class="icon"></div>
-					<div class="stem-mask"></div>
-				</div>
-				
-				<div class="post-content">
-					<h2 class="post-title">20200824 莫名其妙的第三四次見面</h2>
-					<div class="entry-content">
-						<p>跟阿智去了台北~就一起找你吃晚餐，我們吃了點點心，然後我的手機就掉了:D，謝謝你禮拜一幫我拿回竹南！我們吃了石二鍋跟逛了一下我的小學~</p>
-					</div>
-				</div>
-			</article>
-			<article class="post twitter-icon" data-stem-color="white">
-				<div class="stem-overlay">
-					<div class="icon"></div>
-					<div class="stem-mask"></div>
-				</div>
-				
-				<div class="post-content">
-					<h2 class="post-title">20200905 Hi5 台北</h2>
-					<div class="entry-content">
-						<p>這是一趟兩日遊~終於可以見比較久了！</p>
-						<p>我們去了士林兒童新樂園，去的途中我們邊走路邊聊天，我們玩了一些遊樂設施，摩天輪才20元當然要坐兩次阿！後來下午吃了壽司郎、逛了Uniqlo、晚上還去了寧夏夜市，感覺這趟旅程都在走路，但我很開心喔!</p>
-						<p>第二天我們去了紀州庵文學森林，拍了很多可愛的照片，還吃了鴉片粉圓，邊騎著腳踏車看著你的背影，真的Peaceful，我們還吃了第二次肉多多！爽啦！最後去了茉莉二手書房~</p>
-					</div>
-				</div>
-			</article>
+        <div class="timeline-img"></div>
 
-			<article class="post twitter-icon" data-stem-color="white">
-				<div class="stem-overlay">
-					<div class="icon"></div>
-					<div class="stem-mask"></div>
-				</div>
-				
-				<div class="post-content">
-					<h2 class="post-title">20200920 Hi6 台北</h2>
-					<div class="entry-content">
-						<p>禮拜五就上去找你 好開心喔! 雖然一開始走到一館走錯了:D 然後我們就吃了頂呱呱結束了美好的一天~</p>
-						<p>禮拜六我們去吃了佐藤咖哩，好好吃喔！很喜歡這種濃郁的咖哩~以後要繼續帶我去吃喔!!然後我們去看了天能，直接矇逼了:D，晚上吃了一家雷拉麵 這應該是我們第一次採雷吧XD</p>
-						<p>禮拜日我跟朋友約好去玩了密室逃脫，ㄅ歉讓你等我了我一下:( 然後我們就吃了一下小火鍋(也不算吧 麻辣燙之類的)，又逛了一下，晚餐吃了燒烤，聊了很多奇怪的事情:D 然後我就搭車回去了:(</p>
-					</div>
-				</div>
-			</article>
+        <div class="timeline-content js--fadeInRight">
+        	<h2>莫名其妙的第三四次見面</h2>
+        	<div class="date">20200824</div>
+          <p>跟阿智去了台北~就一起找你吃晚餐，我們吃了點點心，然後我的手機就掉了:D，謝謝你禮拜一幫我拿回竹南！我們吃了石二鍋跟逛了一下我的小學~</p>
+        </div>
+      </div>   
+      
+      <div class="timeline-item">
+        <div class="timeline-img"></div>
+        <div class="timeline-content timeline-card js--fadeInLeft">
+        	<div class="timeline-img-header"><img src='img/05.jpg' width=100% height=200>
+          	<h2 class="title">Hi5! 台北</h2>
+        	</div>
+        	<div class="date">20200905</div>
+          <p>這是一趟兩日遊~終於可以見比較久了！</p>
+				  <p>我們去了士林兒童新樂園，去的途中我們邊走路邊聊天，我們玩了一些遊樂設施，摩天輪才20元當然要坐兩次阿！後來下午吃了壽司郎、逛了Uniqlo、晚上還去了寧夏夜市，感覺這趟旅程都在走路，但我很開心喔!</p>
+				  <p>第二天我們去了紀州庵文學森林，拍了很多可愛的照片，還吃了鴉片粉圓，邊騎著腳踏車看著你的背影，真的Peaceful，我們還吃了第二次肉多多！爽啦！最後去了茉莉二手書房~</p>
+        </div>
+      </div>   
 
-			<article class="post twitter-icon" data-stem-color="white">
-				<div class="stem-overlay">
-					<div class="icon"></div>
-					<div class="stem-mask"></div>
-				</div>
-				
-				<div class="post-content">
-					<h2 class="post-title">20201004 您來了苗栗</h2>
-					<div class="entry-content">
-						<p>對不起讓你難過了:(</p>
-						<p>但你還是來苗栗找我了，好開心~</p>
-						<p>我們去了路易莎寫自傳跟重灌電腦，然後去了龍鳳漁港跟海邊，一起走走，後來吃了石二鍋，你就回去搭高鐵了，阿還去了客家圓樓，雖然沒進去:D</p>
-					</div>
-				</div>
-			</article>
+      <div class="timeline-item">
+        <div class="timeline-img"></div>
+        <div class="timeline-content timeline-card js--fadeInRight">
+        	<div class="timeline-img-header"><img src='img/06.jpg' width=100% height=200>
+          	<h2 class="title">Hi6! 台北</h2>
+        	</div>
+        	<div class="date">20200920</div>
+          <p>禮拜五就上去找你 好開心喔! 雖然一開始走到一館走錯了:D 然後我們就吃了頂呱呱結束了美好的一天~</p>
+				  <p>禮拜六我們去吃了佐藤咖哩，好好吃喔！很喜歡這種濃郁的咖哩~以後要繼續帶我去吃喔!!然後我們去看了天能，直接矇逼了:D，晚上吃了一家雷拉麵 這應該是我們第一次採雷吧XD</p>
+				  <p>禮拜日我跟朋友約好去玩了密室逃脫，ㄅ歉讓你等我了我一下:( 然後我們就吃了一下小火鍋(也不算吧 麻辣燙之類的)，又逛了一下，晚餐吃了燒烤，聊了很多奇怪的事情:D 然後我就搭車回去了:(</p>
+        </div>
+      </div>   
+      
+      <div class="timeline-item">
+        <div class="timeline-img"></div>
+        <div class="timeline-content timeline-card js--fadeInLeft">
+        	<div class="timeline-img-header"><img src='img/07.jpg' width=100% height=200>
+          	<h2 class="title">Hi7! 您來了苗栗</h2>
+        	</div>
+        	<div class="date">20201004</div>
+        		<p>對不起讓你難過了:(</p>
+				    <p>但你還是來苗栗找我了，好開心~</p>
+				    <p>我們去了路易莎寫自傳跟重灌電腦，然後去了龍鳳漁港跟海邊，一起走走，後來吃了石二鍋，你就回去搭高鐵了，阿還去了客家圓樓，雖然沒進去:D</p>
+        </div>
+      </div>      
 
-			<article class="post music-icon" data-stem-color="yellow">
-				<div class="stem-overlay">
-					<div class="icon"></div>
-					<div class="stem-mask"></div>
-				</div>
-				
-				<div class="post-content">
-					<h2 class="post-title">未完待續</h2>
-					<div class="entry-content">
-						<p>還有一輩子要走呢！</p>
-					</div>
-				</div>
-			</article>
-			
-		</div> <!-- post-wrapper -->
-	
-		<div class="single-stem-icon scroll-to-top trigger-scroll-to-top"></div>
-			
-	</div> <!-- section-inner -->
-</div> <!-- main-content -->
+      <div class="timeline-item">
+        <div class="timeline-img"></div>
+        <div class="timeline-content timeline-card js--fadeInRight">
+        	<div class="timeline-img-header"><img src='img/08.jpg' width=100% height=200>
+          	<h2 class="title">Hi8! 日月潭雙十連假</h2>
+        	</div>
+        	<div class="date">20201009</div>
+				    <p>出發日月潭囉~我們一起搭火車，看到倉鼠女友正在吃御飯糰，太可愛了吧！</p>
+				    <p>到日月潭準備check in 不免俗的還是要走錯路一下，都是google害的啦！好險我有即時發現，果然是水逆呢:D</p>
+				    <p>到飯店後，有浴缸！開心喔~原本預想不會有的，雖然床是分開的，但我們很卑鄙的把床並在一起了~</p>
+				    <p>肚子真的太餓了，就跑去買杏鮑菇跟花枝丸，果然是給光觀客的價錢呢:D，晚餐就隨便找一家餐館去吃，我還沒發現店家算錯錢，我的倉鼠真是賢慧:D</p>
+				    <p>買個滷味，竟然看到了潘若迪，但旁人完全沒有反應，就我們這兩個鄉巴佬好驚訝，接著去7-11感覺又看到很多電視的人，但又叫不出名子好好笑</p>
+				    <p>後來買了紅薯餅，好好吃喔!但檸檬紅茶不行:D</p>
+				    <p>第二天吃完飯店早餐出門，潘若迪又是你:D，又看到了笑死。後來去租車店，賢慧倉鼠一樣發揮了他的賢慧，選擇租機車不租電動腳踏車，都是500一個一整天一個兩小時，我們是碗不是盤子:D</p>
+				    <p>去了向山拍了很多照片，還去了伊達邵老街吃了之前一直想吃的包子，但其實沒這麼神。山豬肉調味也普普，只有冰淇淋跟紅茶好喝:D，沿途一直看到有人拿著竹子肉串！好想吃喔！後來發現是烤麻糬:D 最後被雞翅包飯雷了一頓，但發現了你以前跟家人住的飯店！好神奇XD</p>
+				    <p>回程去了阿婆茶葉蛋，結論是..恩..比7-11入味XD 後來回飯店我們都曬傷了XD 一樣找了一間餐館吃飯，今天的好吃多了~</p>
+				    <p>後來我們去湖邊走走，然後沿路看星星，偷窺日月潭大飯店的人，看人家露營，聽到歌聲，聽到阿姨吐槽，亨唱不上去還換歌，我們決定去那間酒吧喝一杯:D</p>
+				    <p>第三天直接睡死沒吃到早餐:D，然後中午吃火鍋，準備回程囉~坐了好久的車，終於回竹南了，我帶你去尚順逛了一下，吃個飯就回去了，不免俗的還是要偷哭一下啦，期待下次見面:D</p>
+        </div>
+      </div>         
+          
+    </div>
+  </section>
+  <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+<script src='https://cdn.jsdelivr.net/scrollreveal.js/3.3.1/scrollreveal.min.js'></script>
 
-<!-- partial -->
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/selectivizr/1.0.2/selectivizr-min.js'></script><script  src="./script.js"></script>
+    <script src="js/index.js"></script>
 
 </body>
 </html>
