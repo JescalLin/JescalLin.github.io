@@ -187,6 +187,8 @@
                               <div class="card-body">
                                 <button id="miaoli" type="button" class="btn btn-outline-primary btn-block">苗栗 <span
                                     class="badge badge-danger badge-pill">2</span></button>
+                                <button id="nantou" type="button" class="btn btn-outline-primary btn-block">南投 <span
+                                    class="badge badge-danger badge-pill">1</span></button>
                               </div>
                             </div>
                           </div>
@@ -251,9 +253,13 @@
                 var taipai_btn = document.getElementById("taipei")
                 var chiayi_btn = document.getElementById("chiayi")
                 var miaoli_btn = document.getElementById("miaoli")
+                var nantou_btn = document.getElementById("nantou")
                 var sleep = document.getElementById("sleep")
                 var eat = document.getElementById("eat")
                 var play = document.getElementById("play")
+                sleep.innerHTML = "摩莎曼拉精品旅館-台北車站館/泊居旅店(二館)"
+                eat.innerHTML = "肉多多火鍋-古亭旗艦店/點點心微風-台北車站店/佐藤咖哩/大河屋燒肉丼串燒-微風北車店"
+                play.innerHTML = "寧夏夜市/紀州庵文學森林/茉莉二手書店-台大店/淡水河/臺北市兒童新樂園/臺北京站威秀影城"
                 taipai_btn.onclick = function () {
                   sleep.innerHTML = "摩莎曼拉精品旅館-台北車站館/泊居旅店(二館)"
                   eat.innerHTML = "肉多多火鍋-古亭旗艦店/點點心微風-台北車站店/佐藤咖哩/大河屋燒肉丼串燒-微風北車店"
@@ -265,9 +271,14 @@
                   play.innerHTML = "森林之歌/嘉義公園/仁義潭水庫"
                 }
                 miaoli_btn.onclick = function () {
-                  sleep.innerHTML = "龍鳳漁港/客家圓樓"
+                  sleep.innerHTML = " "
                   eat.innerHTML = "石二鍋/路易莎咖啡(竹南大營店)"
-                  play.innerHTML = "苗栗縣竹南鎮新南國民小學"
+                  play.innerHTML = "龍鳳漁港/客家圓樓/苗栗縣竹南鎮新南國民小學/尚順育樂世界"
+                }
+                nantou_btn.onclick = function () {
+                  sleep.innerHTML = "日月潭青井澤休閒旅店"
+                  eat.innerHTML = "敝姓鍋南投日月潭店"
+                  play.innerHTML = "日月潭/向山遊客中心/伊達邵老街/玄光碼頭"
                 }
               </script>
             </div>
