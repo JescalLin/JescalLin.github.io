@@ -1,560 +1,529 @@
-var MouseHandler = (function() {
-	var x = 0;
-	var y = 0;
-	var mouseIn = false;
-	
-	var init = function(eventSrc) {
-		eventSrc.addEventListener('mousemove', onMouseMove);
-		eventSrc.addEventListener('mouseout', onMouseOut);
-		eventSrc.addEventListener('mouseover', onMouseOver);
-	};
-	
-	var onMouseOut  = function() {
-		mouseIn = false;
-	};
-	
-	var onMouseOver = function() {
-		mouseIn = true;
-	};
-	
-	var onMouseMove = function(e) {
-		x = e.clientX;
-		y = e.clientY;
-	};
-	
-	var getPos = function() {
-		return {
-			x: x,
-			y: y
-		};
-	};
-	
-	var isMouseIn = function() {
-		return mouseIn;
-	};
-	
-	return {
-		init: init,
-		getPos: getPos,
-		isMouseIn: isMouseIn
-	};
-}());
+document.addEventListener("DOMContentLoaded", function () {
+  // Wait till the browser is ready to render the game (avoids glitches)
+  window.requestAnimationFrame(function () {
+    var manager = new GameManager(4, KeyboardInputManager, HTMLActuator);
+  });
+});
 
-Quadtree.MAX_OBJECTS = 5;
-Quadtree.MAX_LEVEL = 5;
-function Quadtree(lvl, bnds) {
-    var level = lvl;
-    var bounds = bnds;
-    var objects = [];
-    var nodes = [];
-    
-    var xMiddle = bounds.x + (bounds.width / 2);
-    var yMiddle = bounds.y + (bounds.height / 2);
-    
-	var clear = function() {
-		objects = [];
-		nodes = [];
-	};
-	
-    var split = function() {
-        nodes[0] = new Quadtree(level+1, {x: xMiddle, y: bounds.y , width: bounds.width/2, height: bounds.height/2});
-        nodes[1] = new Quadtree(level+1, {x: bounds.x, y: bounds.y, width: bounds.width/2, height: bounds.height/2});
-        nodes[2] = new Quadtree(level+1, {x: bounds.x, y: yMiddle, width: bounds.width/2, height: bounds.height/2});
-        nodes[3] = new Quadtree(level+1, {x: xMiddle, y: yMiddle, width: bounds.width/2, height: bounds.height/2});
-    };
-    
-    var getIndex = function(rec) {
-        var top = (rec.y > bounds.y && (rec.y+rec.height) < yMiddle);
-        var bottom = (rec.y > yMiddle && (rec.y+rec.height) < (bounds.y+bounds.height));
-        
-        if(rec.x > bounds.x && (rec.x+rec.width) < xMiddle) {
-            if(top) {
-                return 1;
-            } else if(bottom) {//LEFT
-                return 2;
-            }
-        } else if(rec.x > xMiddle && (rec.x+rec.width) < (bounds.x+bounds.width)) {
-            if(top) {
-                return 0;
-            } else if(bottom) {//RIGHT
-                return 3;
-            }
-        }        
-        return -1;
-    };
-    
-    var insert = function(ent) {
-		var rec = ent.getBounds();
-        var index = getIndex(rec);
-        var len = 0;
-        var i = 0;
-        
-        if(nodes[0] && index !== -1) {
-            nodes[index].insert(ent);
-            return;
+function GameManager(size, InputManager, Actuator) {
+  this.size         = size; // Size of the grid
+  this.inputManager = new InputManager;
+  this.actuator     = new Actuator;
+
+  this.startTiles   = 2;
+
+  this.inputManager.on("move", this.move.bind(this));
+  this.inputManager.on("restart", this.restart.bind(this));
+
+  this.setup();
+}
+
+// Restart the game
+GameManager.prototype.restart = function () {
+  this.actuator.restart();
+  this.setup();
+};
+
+// Set up the game
+GameManager.prototype.setup = function () {
+  this.grid         = new Grid(this.size);
+
+  this.score        = 0;
+  this.over         = false;
+  this.won          = false;
+
+  // Add the initial tiles
+  this.addStartTiles();
+
+  // Update the actuator
+  this.actuate();
+};
+
+// Set up the initial tiles to start the game with
+GameManager.prototype.addStartTiles = function () {
+  for (var i = 0; i < this.startTiles; i++) {
+    this.addRandomTile();
+  }
+};
+
+// Adds a tile in a random position
+GameManager.prototype.addRandomTile = function () {
+  if (this.grid.cellsAvailable()) {
+    var value = Math.random() < 0.9 ? 2 : 4;
+    var tile = new Tile(this.grid.randomAvailableCell(), value);
+
+    this.grid.insertTile(tile);
+  }
+};
+
+// Sends the updated grid to the actuator
+GameManager.prototype.actuate = function () {
+  this.actuator.actuate(this.grid, {
+    score: this.score,
+    over:  this.over,
+    won:   this.won
+  });
+};
+
+// Save all tile positions and remove merger info
+GameManager.prototype.prepareTiles = function () {
+  this.grid.eachCell(function (x, y, tile) {
+    if (tile) {
+      tile.mergedFrom = null;
+      tile.savePosition();
+    }
+  });
+};
+
+// Move a tile and its representation
+GameManager.prototype.moveTile = function (tile, cell) {
+  this.grid.cells[tile.x][tile.y] = null;
+  this.grid.cells[cell.x][cell.y] = tile;
+  tile.updatePosition(cell);
+};
+
+// Move tiles on the grid in the specified direction
+GameManager.prototype.move = function (direction) {
+  // 0: up, 1: right, 2:down, 3: left
+  var self = this;
+
+  if (this.over || this.won) return; // Don't do anything if the game's over
+
+  var cell, tile;
+
+  var vector     = this.getVector(direction);
+  var traversals = this.buildTraversals(vector);
+  var moved      = false;
+
+  // Save the current tile positions and remove merger information
+  this.prepareTiles();
+
+  // Traverse the grid in the right direction and move tiles
+  traversals.x.forEach(function (x) {
+    traversals.y.forEach(function (y) {
+      cell = { x: x, y: y };
+      tile = self.grid.cellContent(cell);
+
+      if (tile) {
+        var positions = self.findFarthestPosition(cell, vector);
+        var next      = self.grid.cellContent(positions.next);
+
+        // Only one merger per row traversal?
+        if (next && next.value === tile.value && !next.mergedFrom) {
+          var merged = new Tile(positions.next, tile.value * 2);
+          merged.mergedFrom = [tile, next];
+
+          self.grid.insertTile(merged);
+          self.grid.removeTile(tile);
+
+          // Converge the two tiles' positions
+          tile.updatePosition(positions.next);
+
+          // Update the score
+          self.score += merged.value;
+
+          // The mighty 2048 tile
+          if (merged.value === 2048) self.won = true;
+        } else {
+          self.moveTile(tile, positions.farthest);
         }
-        
-        objects.push(ent);
-        
-        if(objects.length > Quadtree.MAX_OBJECTS && level < Quadtree.MAX_LEVEL) {
-            if(!nodes[0]) {
-                split();
-            }
-            
-            len = objects.length;
-            while(i < objects.length) {
-                index = getIndex(objects[i].getBounds());
-                
-                if(index !== -1) {
-                    nodes[index].insert(objects[i]);
-                    objects.splice(i, 1);
-                } else {
-                    i += 1;
-                }
-            }
-            
+
+        if (!self.positionsEqual(cell, tile)) {
+          moved = true; // The tile moved from its original cell!
         }
-    };
-    
-	var retrieve = function (list, ent) {
-		var rec1 = bounds;
-		var rec2 = ent.getBounds();
-		
-		if(rec2.x < (rec1.x+rec1.width)  && (rec2.x+rec2.width)  > rec1.x &&
-		   rec2.y < (rec1.y+rec1.height) && (rec2.y+rec2.height) > rec1.y) {
-			
-			for(var o in objects) {
-				if(objects[o] !== ent) {
-					list.push(objects[o]);
-				}
-			}
-			
-			if(nodes.length) {
-				nodes[0].retrieve(list, ent);
-				nodes[1].retrieve(list, ent);
-				nodes[2].retrieve(list, ent);
-				nodes[3].retrieve(list, ent);
-			}
-		}
-		
-		return list;
-	};
-	
-	var drawTree = function(ctx) {
-		draw(ctx);
-		if(nodes[0]) {
-			nodes[0].drawTree(ctx);
-			nodes[1].drawTree(ctx);
-			nodes[2].drawTree(ctx);
-			nodes[3].drawTree(ctx);
-		}
-	};
-	
-	var draw = function(ctx) {
-		var entAttr = null
-		ctx.strokeStyle = 'black';
-		ctx.lineWidth = 1;
-		ctx.strokeRect(bounds.x/20, bounds.y/20, bounds.width/20, bounds.height/20);
-		
-		ctx.fillStyle = 'gray';
-		for(o in objects) {
-			entAttr = objects[o].getAttr();
-			ctx.fillRect(entAttr.x/20, entAttr.y/20, 3, 3);
-		}
-	};
-	
-    var toString = function() {
-        return '('+bounds.x+','+bounds.y+')'+'['+bounds.width+','+bounds.height+']';
-    };
-    
-    return {
-        clear: clear,
-        insert: insert,
-        retrieve: retrieve,
-		drawTree: drawTree,
-        toString: toString,
-    };
+      }
+    });
+  });
+
+  if (moved) {
+    this.addRandomTile();
+
+    if (!this.movesAvailable()) {
+      this.over = true; // Game over!
+    }
+
+    this.actuate();
+  }
+};
+
+// Get the vector representing the chosen direction
+GameManager.prototype.getVector = function (direction) {
+  // Vectors representing tile movement
+  var map = {
+    0: { x: 0,  y: -1 }, // up
+    1: { x: 1,  y: 0 },  // right
+    2: { x: 0,  y: 1 },  // down
+    3: { x: -1, y: 0 }   // left
+  };
+
+  return map[direction];
+};
+
+// Build a list of positions to traverse in the right order
+GameManager.prototype.buildTraversals = function (vector) {
+  var traversals = { x: [], y: [] };
+
+  for (var pos = 0; pos < this.size; pos++) {
+    traversals.x.push(pos);
+    traversals.y.push(pos);
+  }
+
+  // Always traverse from the farthest cell in the chosen direction
+  if (vector.x === 1) traversals.x = traversals.x.reverse();
+  if (vector.y === 1) traversals.y = traversals.y.reverse();
+
+  return traversals;
+};
+
+GameManager.prototype.findFarthestPosition = function (cell, vector) {
+  var previous;
+
+  // Progress towards the vector direction until an obstacle is found
+  do {
+    previous = cell;
+    cell     = { x: previous.x + vector.x, y: previous.y + vector.y };
+  } while (this.grid.withinBounds(cell) &&
+           this.grid.cellAvailable(cell));
+
+  return {
+    farthest: previous,
+    next: cell // Used to check if a merge is required
+  };
+};
+
+GameManager.prototype.movesAvailable = function () {
+  return this.grid.cellsAvailable() || this.tileMatchesAvailable();
+};
+
+// Check for available matches between tiles (more expensive check)
+GameManager.prototype.tileMatchesAvailable = function () {
+  var self = this;
+
+  var tile;
+
+  for (var x = 0; x < this.size; x++) {
+    for (var y = 0; y < this.size; y++) {
+      tile = this.grid.cellContent({ x: x, y: y });
+
+      if (tile) {
+        for (var direction = 0; direction < 4; direction++) {
+          var vector = self.getVector(direction);
+          var cell   = { x: x + vector.x, y: y + vector.y };
+
+          var other  = self.grid.cellContent(cell);
+          if (other) {
+          }
+
+          if (other && other.value === tile.value) {
+            return true; // These two tiles can be merged
+          }
+        }
+      }
+    }
+  }
+
+  return false;
+};
+
+GameManager.prototype.positionsEqual = function (first, second) {
+  return first.x === second.x && first.y === second.y;
+};
+
+function Grid(size) {
+  this.size = size;
+
+  this.cells = [];
+
+  this.build();
 }
 
-function Circle(attr) {
-	attr = attr || {};
-	
-	var x = attr.x || 0;
-	var y = attr.y || 0;
-	var mass = attr.mass || 500;
-	var color = attr.color || 'white';
-	var borderColor = attr.borderColor || 'black';
-	var velX = attr.velX || 0;
-	var velY = attr.velY || 0;
-	var droplet  = attr.droplet || false;
-	
-	var maxVel = 80 * (80 / Math.sqrt(mass));
-	var radius = Math.sqrt( mass / Math.PI ); //1 unit of area === 1 uni of mass
-	
-	var getAttr = function() {
-		return {
-			x: x,
-			y: y,
-			mass: mass,
-			radius: radius,
-			color: color,
-			velX: velX,
-			velY: velY,
-			maxVel: maxVel
-		};
-	};
-	
-	var setAttr = function(attr) {
-		x = (attr.x !== undefined)? attr.x: x;
-		y = (attr.y !== undefined)? attr.y: y;
-		mass = (attr.mass !== undefined)? attr.mass: mass;
-		color = (attr.color !== undefined)? attr.color: color;
-		velX = (attr.velX !== undefined)? attr.velX: velX;
-		velY = (attr.velY !== undefined)? attr.velY: velY;
-	};
-	
-	var incMass = function(dMass) {
-		mass += dMass;
-		maxVel = 100 * (100 / Math.sqrt(mass));
-		radius = Math.sqrt( mass / Math.PI );
-	};
-	
-	var intersects = function(ent2) {
-		var ent2Attr = ent2.getAttr();
-		
-		var dX = Math.abs(ent2Attr.x - x);
-		var dY = Math.abs(ent2Attr.y - y);
-		var totalRadius = ent2Attr.radius + radius;
-		
-		return (dX < totalRadius && dY < totalRadius);
-	};
-	
-	var draw = function(ctx, cam) {
-		var camSize = cam.getSize();
-		var rPos = cam.getRelPos(getAttr());
-		
-		//if outside Cam view
-		if((rPos.x + radius) <  0 || (rPos.y + radius) <  0 || (rPos.x - radius) >  camSize.width || (rPos.y - radius) > camSize.height) {
-			return;
-		}
-		
-		ctx.fillStyle = color;
-		ctx.strokeStyle = borderColor;
-		ctx.lineWidth = 5;
-		
-		ctx.beginPath();
-		ctx.arc(rPos.x, rPos.y, radius, 0, 2 * Math.PI, false);
-		ctx.fill();
-		ctx.stroke();
-	};
-	
-	var update = !droplet && function(dTime) {
-		x += velX * dTime;
-		y += velY * dTime;
-	};
-	
-	var getBounds = function() {
-		return {
-			x: x-radius,
-			y: y-radius,
-			width: radius*2,
-			height: radius*2,
-		};
-	};
-	
-	return {
-		getBounds: getBounds,
-		getAttr: getAttr,
-		setAttr: setAttr,
-		incMass: incMass,
-		intersects: intersects,
-		draw: draw,
-		update: update
-	};
+// Build a grid of the specified size
+Grid.prototype.build = function () {
+  for (var x = 0; x < this.size; x++) {
+    var row = this.cells[x] = [];
+
+    for (var y = 0; y < this.size; y++) {
+      row.push(null);
+    }
+  }
+};
+
+// Find the first available random position
+Grid.prototype.randomAvailableCell = function () {
+  var cells = this.availableCells();
+
+  if (cells.length) {
+    return cells[Math.floor(Math.random() * cells.length)];
+  }
+};
+
+Grid.prototype.availableCells = function () {
+  var cells = [];
+
+  this.eachCell(function (x, y, tile) {
+    if (!tile) {
+      cells.push({ x: x, y: y });
+    }
+  });
+
+  return cells;
+};
+
+// Call callback for every cell
+Grid.prototype.eachCell = function (callback) {
+  for (var x = 0; x < this.size; x++) {
+    for (var y = 0; y < this.size; y++) {
+      callback(x, y, this.cells[x][y]);
+    }
+  }
+};
+
+// Check if there are any cells available
+Grid.prototype.cellsAvailable = function () {
+  return !!this.availableCells().length;
+};
+
+// Check if the specified cell is taken
+Grid.prototype.cellAvailable = function (cell) {
+  return !this.cellOccupied(cell);
+};
+
+Grid.prototype.cellOccupied = function (cell) {
+  return !!this.cellContent(cell);
+};
+
+Grid.prototype.cellContent = function (cell) {
+  if (this.withinBounds(cell)) {
+    return this.cells[cell.x][cell.y];
+  } else {
+    return null;
+  }
+};
+
+// Inserts a tile at its position
+Grid.prototype.insertTile = function (tile) {
+  this.cells[tile.x][tile.y] = tile;
+};
+
+Grid.prototype.removeTile = function (tile) {
+  this.cells[tile.x][tile.y] = null;
+};
+
+Grid.prototype.withinBounds = function (position) {
+  return position.x >= 0 && position.x < this.size &&
+         position.y >= 0 && position.y < this.size;
+};
+
+function HTMLActuator() {
+  this.tileContainer    = document.getElementsByClassName("tile-container")[0];
+  this.scoreContainer   = document.getElementsByClassName("score-container")[0];
+  this.messageContainer = document.getElementsByClassName("game-message")[0];
+
+  this.score = 0;
 }
 
-var gameManager = (function() {
-	var canvasGrid = null;
-	var canvasEnt = null;
-	var canvasQuadtree = null;
-	var ctxGrid = null;
-	var ctxEnt = null;
-	var ctxQuadTree = null;
-	var dTime = 1 / 60;
-	var player = null;
-	var entityBag = [];
-	var qTree = null;
-	var drwQuad = 0;
-	
-	var addEntity = function(ent) {
-		entityBag.push(ent);
-	};
-	
-	var removeEntity = function(ent) {
-		var len =  entityBag.length;
-		var i = 0;
-		
-		for(i=0; i<len; i+=1) {
-			if(ent === entityBag[i]) {
-				entityBag.splice(i, 1);
-				return;
-			}
-		}
-	};
-	
-	var init = function(cvsGridId, cvsEntId, cvsQuadtree) {
-		canvasGrid = document.getElementById(cvsGridId);
-		canvasEnt = document.getElementById(cvsEntId);
-		canvasQuadtree = document.getElementById(cvsQuadtree);
-		ctxGrid = canvasGrid.getContext('2d');
-		ctxEnt = canvasEnt.getContext('2d');
-		ctxQuadtree = canvasQuadtree.getContext('2d');
-		
-		fitToContainer(canvasGrid);
-		fitToContainer(canvasEnt);
-		
-		ctxGrid.fillStyle = '#F0FBFF';
-		ctxGrid.strokeStyle = '#BFBFBF';
-		ctxGrid.lineWidth = 1;
-		
-		MouseHandler.init(document);
-		
-		qTree = new Quadtree(0, {x:0, y:0, width:5000, height:5000});
-		
-		player = new Circle({
-			x: 50,
-			y: 50,
-			color: 'red',
-			mass: 1000,
-			velX: 500,
-			velY:500
-		});
-		
-		player1 = new Circle({
-			x: 50,
-			y: 50,
-			color: 'blue',
-			mass: 1000,
-			velX: 5000,
-			velY:5000
-		});
+HTMLActuator.prototype.actuate = function (grid, metadata) {
+  var self = this;
 
-		Camera.init(ctxEnt, player);
-		
-		addEntity(player);
-		gameloop();
-	};
-	
-	var handleInput = function() {
-		if(MouseHandler.isMouseIn() === false) {
-			player.setAttr({ velX: 0, velY: 0 });
-			return;
-		}
-		
-		var pAttr = player.getAttr();
-		var rPlyrPos = Camera.getRelPos(player.getAttr());
-		var mPos = MouseHandler.getPos();
-		var dX = mPos.x - rPlyrPos.x;
-		var dY = mPos.y - rPlyrPos.y;
-		
-		var vLength = Math.sqrt( (dX*dX) + (dY*dY) );
-		
-		var normX = dX / vLength;
-		var normY = dY / vLength;
-		
-		var newVelX = normX * (pAttr.maxVel * vLength / 50);
-		var newVelY = normY * (pAttr.maxVel * vLength / 50);
-		
-		player.setAttr({
-			velX: newVelX,
-			velY: newVelY
-		});
-	};
-	
-	var drawGrid = function() {
-		var camPos = Camera.getPos();
-		var camSize = Camera.getSize();
-		
-		var start = Math.floor(camPos.x / 40);
-		var relX = Camera.getRelPos({x: (start*40), y: 0}).x;
-		
-		var numLines = camSize.width / 40;
-		var i = 0;
-		
-		
-		ctxGrid.fillRect(0, 0, canvasGrid.width, canvasGrid.height);
-		
-		for(i=0; i<numLines; i+=1) {
-			ctxGrid.beginPath();
-			ctxGrid.moveTo(relX + (40 * i), 0);
-			ctxGrid.lineTo(relX + (40 * i), camSize.height);
-			ctxGrid.stroke();
-		}
-		
-		start = Math.floor(camPos.y / 40);
-		var relY = Camera.getRelPos({x: 0, y: (start * 40)}).y;
-		numLines = camSize.height / 40;
-		
-		for(i=0; i<numLines; i+=1) {
-			ctxGrid.beginPath();
-			ctxGrid.moveTo(0, relY + (40 * i));
-			ctxGrid.lineTo(camSize.width, relY + (40 * i));
-			ctxGrid.stroke();
-		}
-	};
-	
-	var handleCollisions = function() {
-		var possibleColl = [];
-		var collisions = [];
-		var coll = null;
-		var ent = null;
-		var plyMass = player.getAttr().mass
-		var entMass = 0;
-		
-		qTree.clear();
-		for(ent in entityBag) {
-			qTree.insert(entityBag[ent]);
-		}
-		
-		possibleColl = qTree.retrieve([], player);
-		
-		while(ent = possibleColl.pop()) {
-			
-			if(player.intersects(ent)) {
-				entMass = ent.getAttr().mass;
-			
-				if(plyMass > (1.5 * entMass)) {
-					removeEntity(ent);
-					player.incMass(entMass);
-				}
-			}
-			
-			var entAttr = ent.getAttr();
-			ctxQuadtree.fillStyle = 'red';
-			ctxQuadtree.fillRect(entAttr.x/20, entAttr.y/20, 3, 3);
-		}
-	};
-	
-	var fitToContainer = function(canvas) {
-		canvas.style.width='100%';
-		canvas.style.height='100%';
-		canvas.width  = canvas.offsetWidth;
-		canvas.height = canvas.offsetHeight;
-	};
-	
-	var gameloop = function() {
-		var len = entityBag.length;
-		var i = 0;
-		var ent = null;
-		
-		handleInput();
-		Camera.update();
-		
-		drawGrid();
-		
-		if(drwQuad === 5) {
-			ctxQuadtree.fillStyle = 'white';
-			ctxQuadtree.fillRect(0, 0, 250, 250);
-			qTree.drawTree(ctxQuadtree);
-			drwQuad = 0;
-		}
-		drwQuad += 1;
-		
-		ctxEnt.clearRect(0, 0, canvasEnt.width, canvasEnt.height)
-		
-		for(i=0; i<len; i+=1) {
-			ent = entityBag[i];
-			
-			if(ent.update) {
-				ent.update(dTime);
-			}
-			
-			if(ent.draw) {
-				ent.draw(ctxEnt, Camera);
-			}
-		}
-		
-		handleCollisions();
-		
-		setTimeout(gameloop, dTime * 1000);
-	};
-	
-	return {
-		init: init,
-		addEntity: addEntity,
-		removeEntity: removeEntity
-	};
-}());
+  window.requestAnimationFrame(function () {
+    self.clearContainer(self.tileContainer);
 
+    grid.cells.forEach(function (column) {
+      column.forEach(function (cell) {
+        if (cell) {
+          self.addTile(cell);
+        }
+      });
+    });
 
-var Camera = (function() {
-	var x = 0;
-	var y = 0;
-	var width = 0;
-	var height = 0;
-	var ctx = null;
-	var player = null;
-	
-	
-	var init = function(_ctx, plyr) {
-		ctx = _ctx;
-		player = plyr;
-		width = ctx.canvas.width;
-		height = ctx.canvas.height;
-	};
-	
-	var update = function() {
-		width = ctx.canvas.width;
-		height = ctx.canvas.height;
-		
-		var plyrAttr = player.getAttr();
-		x = (plyrAttr.x - width / 2);
-		y = (plyrAttr.y - height / 2);
-	};
-	
-	var getRelPos = function(entAttr) {
-		
-		var relX = entAttr.x - x;
-		var relY = entAttr.y - y;
-		
-		return {
-			x: relX,
-			y: relY
-		};
-	};
-	
-	var getPos = function() {
-		return {
-			x: x,
-			y: y
-		};
-	};
-	
-	var getSize = function() {
-		return {
-			width: width,
-			height: height
-		};
-	};
-	
-	return {
-		init: init,
-		update: update,
-		getRelPos: getRelPos,
-		getPos: getPos,
-		getSize: getSize
-	};
-}());
+    self.updateScore(metadata.score);
 
-var i = 0;
-var space = 70;
-for(i=0; i<400; i+=1) {
-	gameManager.addEntity(new Circle({
-		x: 100 + Math.random() * 4850,//(i%20) * space,
-		y: 100 + Math.random() * 4850,//Math.floor(i/20)*space,
-		color: ['red', 'blue', 'green', 'yellow', 'purple', 'brown', 'violet'][Math.floor(Math.random()*7)],
-		droplet: true
-	}));
+    if (metadata.over) self.message(false); // You lose
+    if (metadata.won) self.message(true); // You win!
+  });
+};
+
+HTMLActuator.prototype.restart = function () {
+  this.clearMessage();
+};
+
+HTMLActuator.prototype.clearContainer = function (container) {
+  while (container.firstChild) {
+    container.removeChild(container.firstChild);
+  }
+};
+
+HTMLActuator.prototype.addTile = function (tile) {
+  var self = this;
+
+  var element   = document.createElement("div");
+  var position  = tile.previousPosition || { x: tile.x, y: tile.y };
+  positionClass = this.positionClass(position);
+
+  // We can't use classlist because it somehow glitches when replacing classes
+  var classes = ["tile", "tile-" + tile.value, positionClass];
+  this.applyClasses(element, classes);
+
+  element.textContent = tile.value;
+
+  if (tile.previousPosition) {
+    // Make sure that the tile gets rendered in the previous position first
+    window.requestAnimationFrame(function () {
+      classes[2] = self.positionClass({ x: tile.x, y: tile.y });
+      self.applyClasses(element, classes); // Update the position
+    });
+  } else if (tile.mergedFrom) {
+    classes.push("tile-merged");
+    this.applyClasses(element, classes);
+
+    // Render the tiles that merged
+    tile.mergedFrom.forEach(function (merged) {
+      self.addTile(merged);
+    });
+  } else {
+    classes.push("tile-new");
+    this.applyClasses(element, classes);
+  }
+
+  // Put the tile on the board
+  this.tileContainer.appendChild(element);
+};
+
+HTMLActuator.prototype.applyClasses = function (element, classes) {
+  element.setAttribute("class", classes.join(" "));
+};
+
+HTMLActuator.prototype.normalizePosition = function (position) {
+  return { x: position.x + 1, y: position.y + 1 };
+};
+
+HTMLActuator.prototype.positionClass = function (position) {
+  position = this.normalizePosition(position);
+  return "tile-position-" + position.x + "-" + position.y;
+};
+
+HTMLActuator.prototype.updateScore = function (score) {
+  this.clearContainer(this.scoreContainer);
+
+  var difference = score - this.score;
+  this.score = score;
+
+  this.scoreContainer.textContent = this.score;
+
+  if (difference > 0) {
+    var addition = document.createElement("div");
+    addition.classList.add("score-addition");
+    addition.textContent = "+" + difference;
+
+    this.scoreContainer.appendChild(addition);
+  }
+};
+
+HTMLActuator.prototype.message = function (won) {
+  var type    = won ? "game-won" : "game-over";
+  var message = won ? "You win!" : "Game over!"
+
+  // if (ga) ga("send", "event", "game", "end", type, this.score);
+
+  this.messageContainer.classList.add(type);
+  this.messageContainer.getElementsByTagName("p")[0].textContent = message;
+};
+
+HTMLActuator.prototype.clearMessage = function () {
+  this.messageContainer.classList.remove("game-won", "game-over");
+};
+
+function KeyboardInputManager() {
+  this.events = {};
+
+  this.listen();
 }
 
-gameManager.init('canvas1', 'canvas2', 'canvas3');
+KeyboardInputManager.prototype.on = function (event, callback) {
+  if (!this.events[event]) {
+    this.events[event] = [];
+  }
+  this.events[event].push(callback);
+};
+
+KeyboardInputManager.prototype.emit = function (event, data) {
+  var callbacks = this.events[event];
+  if (callbacks) {
+    callbacks.forEach(function (callback) {
+      callback(data);
+    });
+  }
+};
+
+KeyboardInputManager.prototype.listen = function () {
+  var self = this;
+
+  var map = {
+    38: 0, // Up
+    39: 1, // Right
+    40: 2, // Down
+    37: 3, // Left
+    75: 0, // vim keybindings
+    76: 1,
+    74: 2,
+    72: 3
+  };
+
+  document.addEventListener("keydown", function (event) {
+    var modifiers = event.altKey || event.ctrlKey || event.metaKey ||
+                    event.shiftKey;
+    var mapped    = map[event.which];
+
+    if (!modifiers) {
+      if (mapped !== undefined) {
+        event.preventDefault();
+        self.emit("move", mapped);
+      }
+
+      if (event.which === 32) self.restart.bind(self)(event);
+    }
+  });
+
+  var retry = document.getElementsByClassName("retry-button")[0];
+  retry.addEventListener("click", this.restart.bind(this));
+
+  // Listen to swipe events
+  var gestures = [Hammer.DIRECTION_UP, Hammer.DIRECTION_RIGHT,
+                  Hammer.DIRECTION_DOWN, Hammer.DIRECTION_LEFT];
+
+  var gameContainer = document.getElementsByClassName("game-container")[0];
+  var handler       = Hammer(gameContainer, {
+    drag_block_horizontal: true,
+    drag_block_vertical: true
+  });
+
+  handler.on("swipe", function (event) {
+    event.gesture.preventDefault();
+    mapped = gestures.indexOf(event.gesture.direction);
+
+    if (mapped !== -1) self.emit("move", mapped);
+  });
+};
+
+KeyboardInputManager.prototype.restart = function (event) {
+  event.preventDefault();
+  this.emit("restart");
+};
+
+function Tile(position, value) {
+  this.x                = position.x;
+  this.y                = position.y;
+  this.value            = value || 2;
+
+  this.previousPosition = null;
+  this.mergedFrom       = null; // Tracks tiles that merged together
+}
+
+Tile.prototype.savePosition = function () {
+  this.previousPosition = { x: this.x, y: this.y };
+};
+
+Tile.prototype.updatePosition = function (position) {
+  this.x = position.x;
+  this.y = position.y;
+};
