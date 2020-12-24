@@ -46,6 +46,9 @@
             <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#portfolio">App區</a>
           </li>
           <li class="nav-item mx-0 mx-lg-1">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#movie">電影清單</a>
+          </li>
+          <li class="nav-item mx-0 mx-lg-1">
             <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#timeline">時間軸&足跡</a>
           </li>
         </ul>
@@ -175,6 +178,52 @@
     </div>
   </section>
 
+
+    <!-- Portfolio Grid Section -->
+    <section  id="movie">
+      <div class="container">
+        <h2 class="text-center text-uppercase text-secondary mb-0">影片清單</h2>
+        <hr class="star-dark mb-5">
+
+            <!-- Swiper -->
+    <div class="swiper-container1">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><img width="100%" src="img/movie/001.JPG"></div>
+        <div class="swiper-slide"><img width="100%" src="img/movie/002.JPG"></div>
+        <div class="swiper-slide"><img width="100%" src="img/movie/003.JPG"></div>
+        <div class="swiper-slide"><img width="100%" src="img/movie/004.JPG"></div>
+        <div class="swiper-slide"><img width="100%" src="img/movie/005.JPG"  style="border:5px red dashed;"></div>
+      </div>
+      <!-- Add Scrollbar -->
+      <div class="swiper-scrollbar"></div>
+    </div>
+    <!-- Swiper JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <!-- Initialize Swiper -->
+    <script>
+      var swiper = new Swiper('.swiper-container1', {
+        lazy: true,
+        loop: false,
+        slidesPerView: 5,
+        spaceBetween: 10,
+        scrollbar: {
+          el: '.swiper-scrollbar',
+          hide: true,
+        },
+        pagination: {
+          el: '.swiper-pagination',
+        },
+        autoplay: {
+          delay: 2500,
+          disableOnInteraction: false,
+        },
+      });
+    </script>
+        
+      </div>
+    </section>
+
   <!-- timeline Section -->
   <section id="timeline">
     <div class="text-center">
@@ -222,7 +271,7 @@
                               data-parent="#accordionExample1">
                               <div class="card-body">
                                 <button id="taipei" type="button" class="btn btn-outline-primary btn-block">臺北 <span
-                                    class="badge badge-danger badge-pill">5</span></button>
+                                    class="badge badge-danger badge-pill">7</span></button>
                               </div>
                             </div>
                           </div>
@@ -310,13 +359,13 @@
                 var sleep = document.getElementById("sleep")
                 var eat = document.getElementById("eat")
                 var play = document.getElementById("play")
-                sleep.innerHTML = "摩莎曼拉精品旅館-台北車站館/泊居旅店(二館)"
-                eat.innerHTML = "肉多多火鍋-古亭旗艦店/點點心微風-台北車站店/佐藤咖哩/大河屋燒肉丼串燒-微風北車店/大吉祥香豆富(淡江)/西門町夠嗆麻辣香鍋"
-                play.innerHTML = "寧夏夜市/紀州庵文學森林/茉莉二手書店-台大店/淡水河/臺北市兒童新樂園/臺北京站威秀影城/西門町"
+                sleep.innerHTML = "摩莎曼拉精品旅館-台北車站館/泊居旅店(二館)/燦路都"
+                eat.innerHTML = "肉多多火鍋-古亭旗艦店/點點心微風-台北車站店/佐藤咖哩/大河屋燒肉丼串燒-微風北車店/大吉祥香豆富(淡江)/壽喜燒一丁二代目- 雙城店/黑殿/西門町夠嗆麻辣香鍋"
+                play.innerHTML = "寧夏夜市/紀州庵文學森林/茉莉二手書店-台大店/淡水河/臺北市兒童新樂園/臺北京站威秀影城/袖珍博物館/西門町"
                 taipai_btn.onclick = function () {
-                  sleep.innerHTML = "摩莎曼拉精品旅館-台北車站館/泊居旅店(二館)"
-                  eat.innerHTML = "肉多多火鍋-古亭旗艦店/點點心微風-台北車站店/佐藤咖哩/大河屋燒肉丼串燒-微風北車店/大吉祥香豆富(淡江)/西門町夠嗆麻辣香鍋"
-                  play.innerHTML = "寧夏夜市/紀州庵文學森林/茉莉二手書店-台大店/淡水河/臺北市兒童新樂園/臺北京站威秀影城/西門町"
+                  sleep.innerHTML = "摩莎曼拉精品旅館-台北車站館/泊居旅店(二館)/燦路都 "
+                  eat.innerHTML = "肉多多火鍋-古亭旗艦店/點點心微風-台北車站店/佐藤咖哩/大河屋燒肉丼串燒-微風北車店/大吉祥香豆富(淡江)/壽喜燒一丁二代目- 雙城店/黑殿/西門町夠嗆麻辣香鍋"
+                  play.innerHTML = "寧夏夜市/紀州庵文學森林/茉莉二手書店-台大店/淡水河/臺北市兒童新樂園/臺北京站威秀影城/袖珍博物館/西門町"
                 }
                 chiayi_btn.onclick = function () {
                   sleep.innerHTML = " "
