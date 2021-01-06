@@ -8,6 +8,7 @@
     var map = document.getElementById('map');
     var btn_all = document.getElementById('btn_all');
     var btn_red = document.getElementById('btn_red');
+    var log = document.getElementById('log');
     var btn_green = document.getElementById('btn_greed');
     var tii_red = 0;
     var tii_green = 0;
@@ -15,49 +16,44 @@
     var rand_x = 0;
 
 
-
-    function myfunction_red() {
-      tii_red = tii_red + 1;
-      map.src = "./img/r"+tii_red.toString() + ".png";
-      rand_i = rand_i + 1;
-      if (tii_red == 27) {
-        tii_red = 0;
-      }
-      if (rand_i == rand_x) {
-        clearTimeout(myfunction_red);
-      }
-
-    }
     btn_red.onclick = function () {
-      rand_x = 25 + Math.floor(Math.random() * 50);
+      rand_x = 27 + Math.floor(Math.random() * 50);
       tii_red = 0;
       rand_i = 0;
       myfunction_red = setInterval(myfunction_red, 50);
-
+      function myfunction_red() {
+        tii_red = tii_red + 1;
+        map.src = "./img/r" + tii_red.toString() + ".png";
+        rand_i = rand_i + 1;
+        if (tii_red == 27) {
+          tii_red = 0;
+        }
+        if (rand_i == rand_x) {
+          clearTimeout(myfunction_red);
+        }
+      }
     }
 
 
-    function myfunction_green() {
-      tii_green = tii_green + 1;
-      map.src = "./img/g"+ tii_green.toString() + ".png";
 
-      rand_i = rand_i + 1;
-      if (tii_green == 19) {
-        tii_green = 0;
-      }
-      if (rand_i == rand_x) {
-        clearTimeout(myfunction_green);
-      }
-
-    }
     btn_green.onclick = function () {
-      rand_x = 25 + Math.floor(Math.random() * 50);
+      rand_x = 19 + Math.floor(Math.random() * 50);
       tii_green = 0;
       rand_i = 0;
       myfunction_green = setInterval(myfunction_green, 50);
+      function myfunction_green() {
+        tii_green = tii_green + 1;
+        map.src = "./img/g" + tii_green.toString() + ".png";
 
+        rand_i = rand_i + 1;
+        if (tii_green == 19) {
+          tii_green = 0;
+        }
+        if (rand_i == rand_x) {
+          clearTimeout(myfunction_green);
+        }
+      }
     }
-
 
 
   }
@@ -67,60 +63,60 @@
 <body>
   <div class="w3-container">
     <div class="w3-center">
-        <p>點選按鈕隨機旅遊地點</p>
-        <div class="w3-row">
-          <button id="btn_red" class="w3-button w3-blue w3-round w3-red">淡水信義線</button>
-          <button id="btn_greed" class="w3-button w3-blue w3-round w3-green">松山新店線</button>
-        </div>
+      <p>點選按鈕隨機旅遊地點</p>
+      <div class="w3-row">
+        <button id="btn_red" class="w3-button w3-blue w3-round w3-red">淡水信義線</button>
+        <button id="btn_greed" class="w3-button w3-blue w3-round w3-green">松山新店線</button>
+      </div>
+      <p id="log"></p>
+      <img id="map" style="width:100%" src="./img/0.png" class=" w3-margin-top">
+      <img style="display:none" src="./img/r1.png">
+      <img style="display:none" src="./img/r2.png">
+      <img style="display:none" src="./img/r3.png">
+      <img style="display:none" src="./img/r4.png">
+      <img style="display:none" src="./img/r5.png">
+      <img style="display:none" src="./img/r6.png">
+      <img style="display:none" src="./img/r7.png">
+      <img style="display:none" src="./img/r8.png">
+      <img style="display:none" src="./img/r9.png">
+      <img style="display:none" src="./img/r10.png">
+      <img style="display:none" src="./img/r11.png">
+      <img style="display:none" src="./img/r12.png">
+      <img style="display:none" src="./img/r13.png">
+      <img style="display:none" src="./img/r14.png">
+      <img style="display:none" src="./img/r15.png">
+      <img style="display:none" src="./img/r16.png">
+      <img style="display:none" src="./img/r17.png">
+      <img style="display:none" src="./img/r18.png">
+      <img style="display:none" src="./img/r19.png">
+      <img style="display:none" src="./img/r20.png">
+      <img style="display:none" src="./img/r21.png">
+      <img style="display:none" src="./img/r22.png">
+      <img style="display:none" src="./img/r23.png">
+      <img style="display:none" src="./img/r24.png">
+      <img style="display:none" src="./img/r25.png">
+      <img style="display:none" src="./img/r26.png">
+      <img style="display:none" src="./img/r27.png">
 
-        <img id="map" style="width:100%" src="./img/0.png" class=" w3-margin-top">
-        <img style="display:none" src="./img/r1.png">
-        <img style="display:none" src="./img/r2.png">
-        <img style="display:none" src="./img/r3.png">
-        <img style="display:none" src="./img/r4.png">
-        <img style="display:none" src="./img/r5.png">
-        <img style="display:none" src="./img/r6.png">
-        <img style="display:none" src="./img/r7.png">
-        <img style="display:none" src="./img/r8.png">
-        <img style="display:none" src="./img/r9.png">
-        <img style="display:none" src="./img/r10.png">
-        <img style="display:none" src="./img/r11.png">
-        <img style="display:none" src="./img/r12.png">
-        <img style="display:none" src="./img/r13.png">
-        <img style="display:none" src="./img/r14.png">
-        <img style="display:none" src="./img/r15.png">
-        <img style="display:none" src="./img/r16.png">
-        <img style="display:none" src="./img/r17.png">
-        <img style="display:none" src="./img/r18.png">
-        <img style="display:none" src="./img/r19.png">
-        <img style="display:none" src="./img/r20.png">
-        <img style="display:none" src="./img/r21.png">
-        <img style="display:none" src="./img/r22.png">
-        <img style="display:none" src="./img/r23.png">
-        <img style="display:none" src="./img/r24.png">
-        <img style="display:none" src="./img/r25.png">
-        <img style="display:none" src="./img/r26.png">
-        <img style="display:none" src="./img/r27.png">
-
-        <img style="display:none" src="./img/g1.png">
-        <img style="display:none" src="./img/g2.png">
-        <img style="display:none" src="./img/g3.png">
-        <img style="display:none" src="./img/g4.png">
-        <img style="display:none" src="./img/g5.png">
-        <img style="display:none" src="./img/g6.png">
-        <img style="display:none" src="./img/g7.png">
-        <img style="display:none" src="./img/g8.png">
-        <img style="display:none" src="./img/g9.png">
-        <img style="display:none" src="./img/g10.png">
-        <img style="display:none" src="./img/g11.png">
-        <img style="display:none" src="./img/g12.png">
-        <img style="display:none" src="./img/g13.png">
-        <img style="display:none" src="./img/g14.png">
-        <img style="display:none" src="./img/g15.png">
-        <img style="display:none" src="./img/g16.png">
-        <img style="display:none" src="./img/g17.png">
-        <img style="display:none" src="./img/g18.png">
-        <img style="display:none" src="./img/g19.png">
+      <img style="display:none" src="./img/g1.png">
+      <img style="display:none" src="./img/g2.png">
+      <img style="display:none" src="./img/g3.png">
+      <img style="display:none" src="./img/g4.png">
+      <img style="display:none" src="./img/g5.png">
+      <img style="display:none" src="./img/g6.png">
+      <img style="display:none" src="./img/g7.png">
+      <img style="display:none" src="./img/g8.png">
+      <img style="display:none" src="./img/g9.png">
+      <img style="display:none" src="./img/g10.png">
+      <img style="display:none" src="./img/g11.png">
+      <img style="display:none" src="./img/g12.png">
+      <img style="display:none" src="./img/g13.png">
+      <img style="display:none" src="./img/g14.png">
+      <img style="display:none" src="./img/g15.png">
+      <img style="display:none" src="./img/g16.png">
+      <img style="display:none" src="./img/g17.png">
+      <img style="display:none" src="./img/g18.png">
+      <img style="display:none" src="./img/g19.png">
     </div>
   </div>
 
