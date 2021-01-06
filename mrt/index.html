@@ -6,7 +6,7 @@
 <script>
   window.onload = function () {
     var map = document.getElementById('map');
-    var btn_all = document.getElementById('btn_all');
+    var btn_stop = document.getElementById('btn_stop');
     var btn_red = document.getElementById('btn_red');
     var log = document.getElementById('log');
     var btn_green = document.getElementById('btn_greed');
@@ -14,44 +14,54 @@
     var tii_green = 0;
     var rand_i = 0;
     var rand_x = 0;
+    var td_speed = 30;
+    var rand_base = 30;
+    var stop_flag =0
 
+    btn_stop.onclick = function () {
+      stop_flag=1;
+    }
 
     btn_red.onclick = function () {
-      rand_x = 27 + Math.floor(Math.random() * 50);
+      rand_base = parseInt(document.getElementById('rand_base').value);
+      rand_x = rand_base + Math.floor(Math.random() * 50);
       tii_red = 0;
       rand_i = 0;
-      myfunction_red = setInterval(myfunction_red, 50);
+      myfunction_red = setInterval(myfunction_red, td_speed);
       function myfunction_red() {
         tii_red = tii_red + 1;
         map.src = "./img/r" + tii_red.toString() + ".png";
         rand_i = rand_i + 1;
-        if (tii_red == 27) {
+        if (tii_red == 27)
           tii_red = 0;
-        }
-        if (rand_i == rand_x) {
+        if (rand_x == rand_i)
           clearTimeout(myfunction_red);
-        }
+        if (stop_flag == 1)
+          clearTimeout(myfunction_red);
+          stop_flag=0;
       }
     }
 
 
 
     btn_green.onclick = function () {
-      rand_x = 19 + Math.floor(Math.random() * 50);
+      rand_base = parseInt(document.getElementById('rand_base').value);
+      rand_x = rand_base + Math.floor(Math.random() * 50);
       tii_green = 0;
       rand_i = 0;
-      myfunction_green = setInterval(myfunction_green, 50);
+      myfunction_green = setInterval(myfunction_green, td_speed);
       function myfunction_green() {
         tii_green = tii_green + 1;
         map.src = "./img/g" + tii_green.toString() + ".png";
 
         rand_i = rand_i + 1;
-        if (tii_green == 19) {
+        if (tii_green == 19)
           tii_green = 0;
-        }
-        if (rand_i == rand_x) {
+        if (rand_i == rand_x)
           clearTimeout(myfunction_green);
-        }
+        if (stop_flag == 1)
+          clearTimeout(myfunction_green);
+          stop_flag=0;
       }
     }
 
@@ -65,6 +75,8 @@
     <div class="w3-center">
       <p>點選按鈕隨機旅遊地點</p>
       <div class="w3-row">
+        <p>亂數基底  <input id="rand_base" value="30"></input></p>
+        <button id="btn_stop" class="w3-button w3-blue w3-round w3-black">手動停</button>
         <button id="btn_red" class="w3-button w3-blue w3-round w3-red">淡水信義線</button>
         <button id="btn_greed" class="w3-button w3-blue w3-round w3-green">松山新店線</button>
       </div>
