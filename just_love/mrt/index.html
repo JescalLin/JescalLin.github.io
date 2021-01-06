@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<title>說走就走-台北捷運版</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="w3.css">
+<script>
+  window.onload = function () {
+    var map = document.getElementById('map');
+    var btn_all = document.getElementById('btn_all');
+    var btn_red = document.getElementById('btn_red');
+    var btn_green = document.getElementById('btn_greed');
+    var tii_red = 0;
+    var tii_green = 0;
+    var rand_i = 0;
+    var rand_x = 0;
+
+
+
+    function myfunction_red() {
+      tii_red = tii_red + 1;
+      map.src = "./img/r"+tii_red.toString() + ".jpg";
+      rand_i = rand_i + 1;
+      if (tii_red == 27) {
+        tii_red = 0;
+      }
+      if (rand_i == rand_x) {
+        clearTimeout(myfunction_red);
+      }
+
+    }
+    btn_red.onclick = function () {
+      rand_x = 25 + Math.floor(Math.random() * 50);
+      tii_red = 0;
+      rand_i = 0;
+      myfunction_red = setInterval(myfunction_red, 50);
+
+    }
+
+
+    function myfunction_green() {
+      tii_green = tii_green + 1;
+      map.src = "./img/g"+ tii_green.toString() + ".jpg";
+
+      rand_i = rand_i + 1;
+      if (tii_green == 19) {
+        tii_green = 0;
+      }
+      if (rand_i == rand_x) {
+        clearTimeout(myfunction_green);
+      }
+
+    }
+    btn_green.onclick = function () {
+      rand_x = 25 + Math.floor(Math.random() * 50);
+      tii_green = 0;
+      rand_i = 0;
+      myfunction_green = setInterval(myfunction_green, 50);
+
+    }
+
+
+
+  }
+
+</script>
+
+<body>
+  <div class="w3-container">
+    <div class="w3-center">
+        <p>點選按鈕隨機旅遊地點</p>
+        <button id="btn_red" class="w3-button w3-blue w3-round w3-red">淡水信義線</button>
+        <button id="btn_greed" class="w3-button w3-blue w3-round w3-green">松山新店線</button>
+        <img id="map" src="./img/0.jpg" class=" w3-margin-top">
+    </div>
+  </div>
+
+</body>
+
+</html>
