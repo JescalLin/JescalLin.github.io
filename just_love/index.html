@@ -204,7 +204,7 @@
           <div class="title text-center" data-swiper-parallax="0">2021/01/03</br>Death to 2020</div>
         </div>
         <div class="swiper-slide"><img width="100%" src="img/movie/0006.JPG">
-          <div class="title text-center" data-swiper-parallax="0">2021/01/05</br>無間道</div>
+          <div class="title text-center" data-swiper-parallax="0">2021/01/05</br>無間道1~3</div>
         </div>
         <div class="swiper-slide"><img width="100%" src="img/movie/0000.JPG"  style="border:5px red dashed;">
           <div class="title text-center" data-swiper-parallax="0">待看</br>全面啟動</div>
@@ -301,6 +301,8 @@
                               <div class="card-body">
                                 <button id="miaoli" type="button" class="btn btn-outline-primary btn-block">苗栗 <span
                                     class="badge badge-danger badge-pill">3</span></button>
+                                <button id="taichung" type="button" class="btn btn-outline-primary btn-block">台中 <span
+                                      class="badge badge-danger badge-pill">1</span></button>
                                 <button id="nantou" type="button" class="btn btn-outline-primary btn-block">南投 <span
                                     class="badge badge-danger badge-pill">1</span></button>
                               </div>
@@ -368,6 +370,10 @@
                 var chiayi_btn = document.getElementById("chiayi")
                 var miaoli_btn = document.getElementById("miaoli")
                 var nantou_btn = document.getElementById("nantou")
+                var taichung_btn = document.getElementById("taichung")
+
+
+                
                 var sleep = document.getElementById("sleep")
                 var eat = document.getElementById("eat")
                 var play = document.getElementById("play")
@@ -394,6 +400,12 @@
                   eat.innerHTML = "敝姓鍋南投日月潭店"
                   play.innerHTML = "日月潭/向山遊客中心/伊達邵老街/玄光碼頭"
                 }
+
+                taichung_btn.onclick = function () {
+                  sleep.innerHTML = "浮雲客棧"
+                  eat.innerHTML = "GangNam 首爾韓鍋/激旨燒き鳥/樂群街蚵仔粥/定食8-新時代店"
+                  play.innerHTML = "逢甲夜市/動漫彩繪巷/台中文學館"
+                }
               </script>
             </div>
           </div>
@@ -407,7 +419,7 @@
   <div class="copyright py-4 text-center text-white">
     <div class="container">
       <p id="demo"></p>
-      <small>Copyright &copy; Just Love 2020</small>
+      <small>Copyright &copy; Just Love 2021</small>
     </div>
     <script>
       var DateDiff = function (sDate1, sDate2) { // sDate1 和 sDate2 是 2016-06-18 格式
