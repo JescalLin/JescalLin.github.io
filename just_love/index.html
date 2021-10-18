@@ -223,8 +223,8 @@
                             <div id="collapseOne1" class="collapse show" aria-labelledby="headingOne1"
                               data-parent="#accordionExample1">
                               <div class="card-body">
-                                <button id="taipei" type="button" class="btn btn-outline-primary btn-block">臺北 <span
-                                    class="badge badge-danger badge-pill">10</span></button>
+                                <button id="taipei" type="button" class="btn btn-outline-primary btn-block">臺北</button>
+                                <button id="hsinchu" type="button" class="btn btn-outline-primary btn-block">新竹</button>
                               </div>
                             </div>
                           </div>
@@ -240,12 +240,9 @@
                             <div id="collapseTwo1" class="collapse" aria-labelledby="headingTwo1"
                               data-parent="#accordionExample1">
                               <div class="card-body">
-                                <button id="miaoli" type="button" class="btn btn-outline-primary btn-block">苗栗 <span
-                                    class="badge badge-danger badge-pill">3</span></button>
-                                <button id="taichung" type="button" class="btn btn-outline-primary btn-block">台中 <span
-                                      class="badge badge-danger badge-pill">1</span></button>
-                                <button id="nantou" type="button" class="btn btn-outline-primary btn-block">南投 <span
-                                    class="badge badge-danger badge-pill">1</span></button>
+                                <button id="miaoli" type="button" class="btn btn-outline-primary btn-block">苗栗</button>
+                                <button id="taichung" type="button" class="btn btn-outline-primary btn-block">台中</button>
+                                <button id="nantou" type="button" class="btn btn-outline-primary btn-block">南投</button>
                               </div>
                             </div>
                           </div>
@@ -262,8 +259,8 @@
                             <div id="collapseThree1" class="collapse" aria-labelledby="headingThree1"
                               data-parent="#accordionExample1">
                               <div class="card-body">
-                                <button id="chiayi" type="button" class="btn btn-outline-primary btn-block">嘉義 <span
-                                    class="badge badge-danger badge-pill">1</span></button>
+                                <button id="chiayi" type="button" class="btn btn-outline-primary btn-block">嘉義</button>
+                                <button id="tainan" type="button" class="btn btn-outline-primary btn-block">台南</button>
                               </div>
                             </div>
                           </div>
@@ -312,7 +309,8 @@
                 var miaoli_btn = document.getElementById("miaoli")
                 var nantou_btn = document.getElementById("nantou")
                 var taichung_btn = document.getElementById("taichung")
-
+                var tainan_btn = document.getElementById("tainan")
+                var hsinchu_btn = document.getElementById("hsinchu")
 
                 
                 var sleep = document.getElementById("sleep")
@@ -347,6 +345,18 @@
                   eat.innerHTML = "GangNam 首爾韓鍋/激旨燒き鳥/樂群街蚵仔粥/定食8-新時代店"
                   play.innerHTML = "逢甲夜市/動漫彩繪巷/台中文學館/台中文學公園"
                 }
+                hsinchu_btn.onclick = function () {
+                  sleep.innerHTML = ""
+                  eat.innerHTML = "皿富器食/田季發爺燒肉/海底撈火鍋/老四川巴蜀麻辣燙"
+                  play.innerHTML = "北埔冷泉/北埔老街/麗池公園/新竹市立動物園/遠東巨城購物中心/十八尖山/新竹都城隍廟"
+                }
+                tainan_btn.onclick = function () {
+                  sleep.innerHTML = "66南"
+                  eat.innerHTML = "花園夜市/鬼咖啡/鼎富發豬油拌飯"
+                  play.innerHTML = "夕遊出張所"
+                }
+                
+
               </script>
             </div>
           </div>
